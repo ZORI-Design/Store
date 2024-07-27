@@ -1,0 +1,18 @@
+{
+  "name": "store",
+  "version": "0.0.0",
+  "description": "Storefront for zorijewelry.com",
+  "main": "index.ts",
+  "scripts": {
+    "test": "dotnet test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZORI-Design/Store.git"
+  },
+  "author": "Zori Wang <zori@zorijewelry.com>",
+  "bugs": {
+    "url": "https://github.com/ZORI-Design/Store/issues"
+  },
+  "homepage": "https://zorijewelry.com/"
+}
