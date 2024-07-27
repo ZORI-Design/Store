@@ -2,8 +2,10 @@
   "name": "store",
   "version": "0.0.0",
   "description": "Storefront for zorijewelry.com",
+  "type": "module",
   "main": "index.ts",
   "scripts": {
+    "start": "dotnet fable watch --lang ts -e ts --run npx vite",
     "test": "dotnet test"
   },
   "repository": {
@@ -14,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/ZORI-Design/Store/issues"
   },
-  "homepage": "https://zorijewelry.com/"
+  "homepage": "https://zorijewelry.com/",
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
 }
