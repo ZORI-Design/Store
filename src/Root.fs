@@ -1,3 +1,5 @@
+module Store.Root
+
 open System
 open Feliz
 open type Html

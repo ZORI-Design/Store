@@ -1,0 +1,7 @@
+{
+    "$schema": "https://xunit.net/schema/current/xunit.runner.schema.json",
+    "methodDisplay": "method",
+    "parallelizeAssembly": true,
+    "failSkips": true,
+    "showLiveOutput": true
+}
