@@ -1,0 +1,8 @@
+node_modules
+fable_modules
+bin
+obj
+
+package-lock.json
+*.ts
+!vite.config.ts
