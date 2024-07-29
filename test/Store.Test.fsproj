@@ -7,11 +7,11 @@
     <DefaultNamespace>Store.Test</DefaultNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="test/Meta.fs" />
-    <Compile Include="test/Program.fs" />
+    <Compile Include="Meta.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="test/xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
@@ -20,6 +20,6 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Store.fsproj" />
+    <ProjectReference Include="../Store.fsproj" />
   </ItemGroup>
 </Project>
