@@ -2,6 +2,7 @@ node_modules
 fable_modules
 bin
 obj
+dist
 
 package-lock.json
 *.ts

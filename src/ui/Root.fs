@@ -1,4 +1,4 @@
-module Store.Root
+module Store.UI.Root
 
 open System
 open Feliz

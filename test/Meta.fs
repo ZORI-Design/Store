@@ -15,4 +15,4 @@ let ``Ensure Test Runner is Functioning`` () =
 
 [<Fact>]
 let ``Ensure Test Runner can Access the Store Project`` () =
-    Assert.IsAssignableFrom<FunctionComponent>(Store.Root.Root)
+    Assert.IsAssignableFrom<FunctionComponent>(Store.UI.Root.Root)
