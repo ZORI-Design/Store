@@ -1,0 +1,26 @@
+name: Enforce PR Labels
+
+on:
+  pull_request:
+    types:
+      - opened
+      - labeled
+      - unlabled
+      - synchronize
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: mheap/github-action-required-labels@v5
+        with:
+          mode: exactly
+          count: 1
+          labels: |
+            source
+            testing
+            documentation
+          add_comment: true
+          message: "This PR must be labelled as a change to source, testing, or documentation."
