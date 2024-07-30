@@ -6,7 +6,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "dotnet fable watch Store.fsproj --lang ts -e ts --run npx vite",
-    "test": "dotnet test Store.Test.fsproj --nologo --logger \"console;verbosity=normal\""
+    "test": "dotnet test ./test --nologo --logger \"console;verbosity=normal\""
   },
   "repository": {
     "type": "git",
