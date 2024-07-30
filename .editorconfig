@@ -1,0 +1,23 @@
+root = true
+
+# All F# files
+[*.fs]
+
+### Core EditorConfig Options ###
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = true
+tab_width = 4
+end_of_line = crlf
+
+### Fantomas Options ###
+max_line_length = 120
+fsharp_space_before_parameter = true
+fsharp_max_infix_operator_expression = 120
+fsharp_max_record_number_of_items = 3
+fsharp_record_multiline_formatter = number_of_items
+fsharp_max_array_or_list_width = 120
+fsharp_multiline_bracket_style = stroustrup
+fsharp_newline_before_multiline_computation_expression = false
+fsharp_bar_before_discriminated_union_declaration = true
+fsharp_keep_max_number_of_blank_lines = 2
