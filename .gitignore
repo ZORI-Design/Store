@@ -4,6 +4,5 @@ bin
 obj
 dist
 
-package-lock.json
 *.ts
 !vite.config.ts
