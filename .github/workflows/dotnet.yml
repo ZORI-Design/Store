@@ -24,6 +24,8 @@ jobs:
         dotnet-version: 8.x
     - name: Install NPM dependencies
       run: npm i
+    - name: Install .NET tools
+      run: dotnet tool restore
     - name: Format
       run: npm run format:check
     - name: Test
