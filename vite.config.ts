@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
     clearScreen: false,
-    root: 'src',
+    root: 'src/ui',
     server: {
         watch: {
             ignored: [

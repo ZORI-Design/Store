@@ -5,7 +5,9 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "start": "dotnet fable watch Store.fsproj --lang ts -e ts --run npx vite",
+    "start": "dotnet fable watch ./src/ui --lang ts -e ts --run npx vite",
+    "build": "dotnet fable ./src/ui --lang ts -e ts --run npx vite build",
+    "preview": "npx vite preview --port 80",
     "test": "dotnet test ./test --nologo --logger \"console;verbosity=normal\""
   },
   "repository": {
