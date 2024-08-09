@@ -3,7 +3,7 @@ fable_modules
 bin
 obj
 dist
+.vs
 
-package-lock.json
 *.ts
 !vite.config.ts
