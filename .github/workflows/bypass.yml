@@ -1,0 +1,15 @@
+name: No Code Changes
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.fs'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Skip
+      run: .NET checks bypassed due to lack of code changes.
