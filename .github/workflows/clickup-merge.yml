@@ -1,3 +1,5 @@
+name: Clickup Close Status
+
 on:
   pull_request:
     types:
