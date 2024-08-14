@@ -18,5 +18,5 @@ jobs:
         with:
           url: ${{ format('https://api.clickup.com/api/v2/task/{0}', steps.clickupid.outputs.id) }}
           method: 'PUT'
-          customHeaders: ${{ format('{{ "Authorization": "{0}" }}', secrets.CLICKUP_API_TOKEN) }}
+          customHeaders: ${{ format('{{ "Authorization":"{0}" }}', secrets.CLICKUP_API_TOKEN) }}
           data: '{ "status": "complete" }'
