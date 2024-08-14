@@ -1,0 +1,22 @@
+on:
+  pull_request:
+    types:
+      - review_requested
+
+jobs:
+  review_requested:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.pull_request.title, '[') && contains(github.event.pull_request.title, ']') }}
+    steps:
+      - name: Get Clickup task ID from PR
+        env:
+          PR_NAME: ${{ github.event.pull_request.title }}
+        id: clickupid
+        run: echo "id=$(TMP=${PR_NAME%]*}; echo ${TMP:1})" >> "$GITHUB_OUTPUT"
+      - name: Mark Clickup task as ready for review
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ format('https://api.clickup.com/api/v2/task/{0}', steps.clickupid.outputs.id) }}
+          method: 'PUT'
+          customHeaders: ${{ format('{{ "Authorization":"{0}" }}', secrets.CLICKUP_API_TOKEN) }}
+          data: '{ "status": "ready for review" }'
