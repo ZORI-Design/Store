@@ -1,33 +1,21 @@
 module Store.UI.Root
 
-open System
 open Feliz
-open type Html
+open Feliz.Router
+open Store.UI.Error
 open Browser
 
 [<ReactComponent>]
 let Root () =
-    let name, setName = React.useState "Zori"
+    let (url, setUrl) = React.useState (Router.currentPath ())
 
-    let title =
-        if String.IsNullOrWhiteSpace(name) then
-            "Nobody"
-        else
-            name.ToUpperInvariant()
-        |> sprintf "%s's Site"
-
-    let paddedName =
-        if String.IsNullOrWhiteSpace name then
-            ""
-        else
-            sprintf " %s" name
-
-    React.useEffect ((fun () -> document.title <- title), [| box name |])
-
-    div [
-        h1 $"Hi{paddedName}! Welcome to your website!"
-        span "Name: "
-        input [ prop.value name; prop.onChange setName ]
+    React.router [
+        router.pathMode
+        router.onUrlChanged setUrl
+        router.children [
+            match url with
+            | _ -> Error PageNotFound
+        ]
     ]
 
 let reactRoot = ReactDOM.createRoot (document.getElementById "root")

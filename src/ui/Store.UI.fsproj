@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
@@ -6,9 +6,11 @@
     <DefaultNamespace>Store.UI</DefaultNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Error.fs" />
     <Compile Include="Root.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Feliz" Version="2.8.0" />
+    <PackageReference Include="Feliz.Router" Version="4.0.0" />
   </ItemGroup>
 </Project>

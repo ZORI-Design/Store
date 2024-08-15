@@ -3,6 +3,8 @@
 open System
 open System.Text.RegularExpressions
 
+type Marker = interface end
+
 [<Measure>]
 type mg // Milligram
 
