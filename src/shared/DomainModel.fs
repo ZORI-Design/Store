@@ -3,6 +3,8 @@
 open System
 open System.Text.RegularExpressions
 
+type Marker = interface end
+
 [<Measure>]
 type mg // Milligram
 
@@ -29,6 +31,8 @@ let emailAddress (ea: string) =
         Some <| EmailAddress ea
     else
         None
+
+type Url = string
 
 type AdPlatform =
     | Alphabet
@@ -88,8 +92,8 @@ type Product = {
     Plating: Material
     Price: MoneyAmount
     ProductionCost: MoneyAmount
-    Thumbnail: Uri
-    Assets: Uri list
+    Thumbnail: Url
+    Assets: Url list
     Category: ProductCategory
     Collection: ProductCollection
 }
@@ -112,7 +116,7 @@ type BrowserData = {
     Languages: string list
 }
 
-type PageLoadData = { PageUrl: Uri; Browser: BrowserData }
+type PageLoadData = { PageUrl: Url; Browser: BrowserData }
 
 type PositionData = { X: uint; Y: uint }
 
