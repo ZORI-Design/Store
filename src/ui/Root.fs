@@ -4,6 +4,7 @@ open Feliz
 open Feliz.Router
 open Store.UI.Error
 open Store.UI.Home
+open Store.UI.About
 open Browser
 
 [<ReactComponent>]
@@ -16,7 +17,7 @@ let Root () =
         router.children [
             match url with
             | [ ] -> Home ()
-            | ["about"] -> Html.h1 "About Page"
+            | ["about"] -> About ()
             | _ -> Error PageNotFound
         ]
     ]
