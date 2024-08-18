@@ -32,6 +32,8 @@ let emailAddress (ea: string) =
     else
         None
 
+type Url = string
+
 type AdPlatform =
     | Alphabet
     | Meta
@@ -90,8 +92,8 @@ type Product = {
     Plating: Material
     Price: MoneyAmount
     ProductionCost: MoneyAmount
-    Thumbnail: Uri
-    Assets: Uri list
+    Thumbnail: Url
+    Assets: Url list
     Category: ProductCategory
     Collection: ProductCollection
 }
@@ -114,7 +116,7 @@ type BrowserData = {
     Languages: string list
 }
 
-type PageLoadData = { PageUrl: Uri; Browser: BrowserData }
+type PageLoadData = { PageUrl: Url; Browser: BrowserData }
 
 type PositionData = { X: uint; Y: uint }
 
