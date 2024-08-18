@@ -6,6 +6,7 @@
     <DefaultNamespace>Store.UI</DefaultNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Home.fs" />
     <Compile Include="Error.fs" />
     <Compile Include="Root.fs" />
   </ItemGroup>
