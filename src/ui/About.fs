@@ -4,6 +4,4 @@ open Feliz
 open type Feliz.Html
 
 [<ReactComponent>]
-let About () =
-    h1 "About ZORI"
-
+let About () = h1 "About ZORI"

@@ -16,8 +16,8 @@ let Root () =
         router.onUrlChanged setUrl
         router.children [
             match url with
-            | [ ] -> Home ()
-            | ["about"] -> About ()
+            | [] -> Home()
+            | [ "about" ] -> About()
             | _ -> Error PageNotFound
         ]
     ]

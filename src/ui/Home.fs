@@ -4,5 +4,4 @@ open Feliz
 open type Feliz.Html
 
 [<ReactComponent>]
-let Home () =
-    h1 "Home"
+let Home () = h1 "Home"
