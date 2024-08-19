@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Store.Shared", "src\shared\Store.Shared.fsproj", "{520F45D2-8375-4854-89C2-1072AF097241}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Store.Crm", "src\crm\Store.Crm.fsproj", "{B2E8FEAB-D060-4B68-82C2-8A83F80BD440}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{520F45D2-8375-4854-89C2-1072AF097241}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{520F45D2-8375-4854-89C2-1072AF097241}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{520F45D2-8375-4854-89C2-1072AF097241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E8FEAB-D060-4B68-82C2-8A83F80BD440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E8FEAB-D060-4B68-82C2-8A83F80BD440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E8FEAB-D060-4B68-82C2-8A83F80BD440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E8FEAB-D060-4B68-82C2-8A83F80BD440}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

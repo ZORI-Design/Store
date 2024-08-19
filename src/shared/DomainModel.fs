@@ -33,6 +33,10 @@ let emailAddress (ea: string) =
         None
 
 type Url = string
+type CorrelationId = string
+
+let correlationId (upper, lower) =
+    UInt128(uint64 upper, uint64 lower).ToString("X32")
 
 type AdPlatform =
     | Alphabet
@@ -105,11 +109,14 @@ type Cart =
     | ActiveCart of CartInfo
     | AbandonedCart of CartInfo
 
+type Lead = { Impression: Impression; CorrelationId: CorrelationId; Cart: Cart }
+
 type BrowserFormFactor =
     | MobileBrowser
     | DesktopBrowser
 
 type BrowserData = {
+    CorrelationId: CorrelationId
     Browser: string
     FormFactor: BrowserFormFactor
     ScreenRes: uint * uint
@@ -135,8 +142,6 @@ type InteractionType =
 type Interaction =
     | ClientInteraction of InteractionType * DateTimeOffset
     | CompanyInteraction of InteractionType * DateTimeOffset
-
-type Lead = { Impression: Impression; Interactions: Interaction list; Cart: Cart }
 
 type CustomerName = { FirstName: string; LastName: string }
 
@@ -213,13 +218,14 @@ type Customer = {
     Email: EmailAddress
     Phone: PhoneNumber option
     OrderHistory: Order list
+    CorrelationId: CorrelationId
 }
 
 type User =
     | Lead of Lead
     | Customer of Customer
 
-type Transaction = { Processed: DateTimeOffset; Amount: MoneyAmount; Order: Order }
+type Transaction = { Processed: DateTimeOffset; Amount: MoneyAmount }
 
 type PaymentPlan = {
     Customer: Customer
