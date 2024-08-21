@@ -239,18 +239,3 @@ type PaymentPlan = {
 type Catalogue = Product list
 
 type Stock = (Product * Quantity) list
-
-let data: Interaction =
-    ClientInteraction(
-        PageLoad {
-            PageUrl = "https://zorijewelry.com/"
-            Browser = {
-                CorrelationId = correlationId (0, 0)
-                Browser = "Postman"
-                FormFactor = DesktopBrowser
-                ScreenRes = (1920u, 1080u)
-                Languages = []
-            }
-        },
-        DateTimeOffset.UtcNow
-    )
