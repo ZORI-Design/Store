@@ -24,12 +24,14 @@ jobs:
       run: npm i
     - name: Install .NET tools
       run: dotnet tool restore
-    - name: Build
+    - name: Build static site
       run: npm run build
-    - name: Upload
+    - name: Upload static site
       uses: jakejarvis/s3-sync-action@v0.5.1
       with:
         args: --follow-symlinks --delete
+    - name: Publish lambdas
+      run: npm run publish-lambdas
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

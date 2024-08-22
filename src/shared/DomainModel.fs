@@ -38,6 +38,31 @@ type CorrelationId = string
 let correlationId (upper, lower) =
     UInt128(uint64 upper, uint64 lower).ToString("X32")
 
+type DateOnly = | DateOnly of year: int * month: int * day: int
+
+let dateOnly (year: int, month: int, day: int) : DateOnly option =
+    let maxDay =
+        match month with
+        | 1
+        | 3
+        | 5
+        | 7
+        | 8
+        | 10
+        | 12 -> 31
+        | 2 when (year % 4 = 0 && year % 100 <> 0) || year % 400 = 0 -> 29
+        | 2 -> 28
+        | 4
+        | 6
+        | 9
+        | 11 -> 30
+        | _ -> 0
+
+    if year > 0 && year < 10000 && month > 0 && month <= 12 && day > 0 && day <= maxDay then
+        DateOnly(year, month, day) |> Some
+    else
+        None
+
 type AdPlatform =
     | Alphabet
     | Meta

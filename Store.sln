@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lambdas", "Lambdas", "{6DF2
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Interactions", "src\lambda\Interactions\Interactions.fsproj", "{2B1B9ADA-D099-4B23-94E7-77D313E70D62}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Leads", "src\lambda\Leads\Leads.fsproj", "{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,12 +48,17 @@ Global
 		{2B1B9ADA-D099-4B23-94E7-77D313E70D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B1B9ADA-D099-4B23-94E7-77D313E70D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B1B9ADA-D099-4B23-94E7-77D313E70D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2B1B9ADA-D099-4B23-94E7-77D313E70D62} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
+		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C82AB04-886E-4B63-9F44-C827B09AFB7B}
