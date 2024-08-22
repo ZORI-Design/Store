@@ -6,6 +6,7 @@
     <DefaultNamespace>Store.UI</DefaultNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NextUI.fs" />
     <Compile Include="Navbar.fs" />
     <Compile Include="About.fs" />
     <Compile Include="Home.fs" />
