@@ -12,19 +12,24 @@ open Store.UI.Navbar
 let Root () =
     let (url, setUrl) = React.useState (Router.currentPath ())
 
-    Html.div [
-        Navbar url
-        React.router [
-            router.pathMode
-            router.onUrlChanged setUrl
-            router.children [
-                match url with
-                | [] -> Home()
-                | [ "about" ] -> About()
-                | _ -> Error PageNotFound
+    NextUI.NextUIProvider {|
+        navigate = Router.navigatePath
+        children = [
+            Navbar url
+            React.router [
+                router.pathMode
+                router.onUrlChanged setUrl
+                router.children [
+                    match url with
+                    | [] -> Home()
+                    | [ "about" ] -> About()
+                    | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
+                    | _ -> Error PageNotFound
+                ]
             ]
         ]
-    ]
+        |> Interop.reactApi.Children.toArray
+    |}
 
 let reactRoot = ReactDOM.createRoot (document.getElementById "root")
 reactRoot.render (Root())
