@@ -14,21 +14,22 @@ let Root () =
 
     NextUI.NextUIProvider {|
         navigate = Router.navigatePath
-        children = [
-            Navbar url
-            React.router [
-                router.pathMode
-                router.onUrlChanged setUrl
-                router.children [
-                    match url with
-                    | [] -> Home()
-                    | [ "about" ] -> About()
-                    | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
-                    | _ -> Error PageNotFound
+        children =
+            [
+                Navbar url
+                React.router [
+                    router.pathMode
+                    router.onUrlChanged setUrl
+                    router.children [
+                        match url with
+                        | [] -> Home()
+                        | [ "about" ] -> About()
+                        | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
+                        | _ -> Error PageNotFound
+                    ]
                 ]
             ]
-        ]
-        |> Interop.reactApi.Children.toArray
+            |> Interop.reactApi.Children.toArray
     |}
 
 let reactRoot = ReactDOM.createRoot (document.getElementById "root")

@@ -11,9 +11,43 @@ type NextUI =
         : ReactElement =
         React.imported ()
 
-    static member Component (name: string) (xs: IReactProperty list) : ReactElement =
-        Interop.reactApi.createElement (import name "@nextui-org/react", createObj !!xs)
+    static member inline color (colorName: string) = prop.custom("color", colorName)
 
     // FOLLOW THIS PATTERN AS YOU NEED ADDITIONAL ELEMENTS!
     // Just change the function name from "Button" to whatever you need in both places.
-    static member inline Button: IReactProperty list -> ReactElement = NextUI.Component "Button"
+    static member inline Button(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Button" "@nextui-org/react", createObj !!xs)
+
+    static member inline Navbar(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Navbar" "@nextui-org/react", createObj !!xs)
+
+    static member inline Navbar(xs: ReactElement list) : ReactElement =
+        Interop.reactApi.createElement (import "Navbar" "@nextui-org/react", createObj !![ prop.children xs ])
+
+    static member inline NavbarBrand(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarBrand" "@nextui-org/react", createObj !!xs)
+
+    static member inline NavbarContent(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarContent" "@nextui-org/react", createObj !!xs)
+
+    static member inline NavbarContent(xs: ReactElement list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarContent" "@nextui-org/react", createObj !![ prop.children xs ])
+
+    static member inline NavbarItem(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarItem" "@nextui-org/react", createObj !!xs)
+
+    static member inline NavbarItem(xs: ReactElement list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarItem" "@nextui-org/react", createObj !![ prop.children xs ])
+
+    static member inline NavbarMenuToggle(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarMenuToggle" "@nextui-org/react", createObj !!xs)
+
+    static member inline NavbarMenu(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarMenu" "@nextui-org/react", createObj !!xs)
+
+    static member inline NavbarMenuItem(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "NavbarMenuItem" "@nextui-org/react", createObj !!xs)
+        
+    static member inline Link(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Link" "@nextui-org/react", createObj !!xs)
+
