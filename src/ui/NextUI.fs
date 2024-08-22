@@ -11,7 +11,9 @@ type NextUI =
         : ReactElement =
         React.imported ()
 
+    static member Component (name: string) (xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import name "@nextui-org/react", createObj !!xs)
+
     // FOLLOW THIS PATTERN AS YOU NEED ADDITIONAL ELEMENTS!
     // Just change the function name from "Button" to whatever you need in both places.
-    static member inline Button(xs: IReactProperty list) : ReactElement =
-        Interop.reactApi.createElement (import "Button" "@nextui-org/react", createObj !!xs)
+    static member inline Button: IReactProperty list -> ReactElement = NextUI.Component "Button"
