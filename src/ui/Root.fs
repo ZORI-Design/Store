@@ -2,8 +2,6 @@ module Store.UI.Root
 
 open Feliz
 open Feliz.Router
-open Fable.Core.JsInterop
-open Fable.React
 open Store.UI.Error
 open Store.UI.Home
 open Store.UI.About
