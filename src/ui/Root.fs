@@ -2,6 +2,8 @@ module Store.UI.Root
 
 open Feliz
 open Feliz.Router
+open Fable.Core.JsInterop
+open Fable.React
 open Store.UI.Error
 open Store.UI.Home
 open Store.UI.About
@@ -11,16 +13,24 @@ open Browser
 let Root () =
     let (url, setUrl) = React.useState (Router.currentPath ())
 
-    React.router [
-        router.pathMode
-        router.onUrlChanged setUrl
-        router.children [
-            match url with
-            | [] -> Home()
-            | [ "about" ] -> About()
-            | _ -> Error PageNotFound
-        ]
-    ]
+    NextUI.NextUIProvider {|
+        navigate = Router.navigatePath
+        children =
+            [
+                React.router [
+                    router.pathMode
+                    router.onUrlChanged setUrl
+                    router.children [
+                        match url with
+                        | [] -> Home()
+                        | [ "about" ] -> About()
+                        | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
+                        | _ -> Error PageNotFound
+                    ]
+                ]
+            ]
+            |> Interop.reactApi.Children.toArray
+    |}
 
 let reactRoot = ReactDOM.createRoot (document.getElementById "root")
 reactRoot.render (Root())
