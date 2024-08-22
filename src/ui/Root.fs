@@ -6,19 +6,23 @@ open Store.UI.Error
 open Store.UI.Home
 open Store.UI.About
 open Browser
+open Store.UI.Navbar
 
 [<ReactComponent>]
 let Root () =
     let (url, setUrl) = React.useState (Router.currentPath ())
 
-    React.router [
-        router.pathMode
-        router.onUrlChanged setUrl
-        router.children [
-            match url with
-            | [] -> Home()
-            | [ "about" ] -> About()
-            | _ -> Error PageNotFound
+    Html.div [
+        Navbar url
+        React.router [
+            router.pathMode
+            router.onUrlChanged setUrl
+            router.children [
+                match url with
+                | [] -> Home()
+                | [ "about" ] -> About()
+                | _ -> Error PageNotFound
+            ]
         ]
     ]
 

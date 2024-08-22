@@ -3,4 +3,4 @@
 open Feliz
 
 [<ReactComponent>]
-let Navbar pageRoute = ()
+let Navbar pageRoute = Html.none
