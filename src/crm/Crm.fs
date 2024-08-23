@@ -73,3 +73,12 @@ let addLead (lead: Lead) =
     let key = lead.CorrelationId
     let sort = lead.Impression.Time.ToString("o")
     genericPut "Leads" { key = key; sort = sort; data = lead }
+
+let tryFindCustomer (id: CorrelationId) : Customer option =
+    let paymentCustomers =
+        payments(DateTimeOffset.MinValue, DateTimeOffset.MaxValue)
+        |> Seq.map _.Customer
+        |> Seq.distinct
+        |> Seq.toList
+
+    paymentCustomers |> List.tryFind (fun c -> c.CorrelationId = id)
