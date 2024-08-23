@@ -6,61 +6,83 @@ open type Store.UI.NextUI
 open type Feliz.Html
 
 [<ReactComponent>]
-let Navbar pageRoute =
+let DefaultNavbar () =
     Navbar [
-        NavbarBrand [
-            prop.children [
-                p [
-                    prop.text "ZORI"
-                    prop.className [ "font-bold"; "text-inherit" ]
-                ]
-            ]
+        prop.style [
+            style.backgroundColor "#ffffff"
         ]
 
-        NavbarContent [
-            prop.className [ "sm:flex"; "gap-4" ]
-            prop.custom ("justify", "center")
-            prop.children [
-                NavbarItem [
-                    Link [
-                        color "foreground"
-                        prop.href "#"
-                        prop.text "Products"
-                    ]
-                ]
-
-                NavbarItem [
-                    prop.custom ("isActive", ())
-                    prop.children [
-                        Link [
-                            prop.href "#"
-                            prop.custom ("aria-current", "page")
-                            prop.text "About Us"
+        prop.children [
+            NavbarBrand [
+                prop.children [
+                    p [
+                        prop.text "ZORI"
+                        prop.className [ "font-bold"; "text-inherit" ]
+                        prop.onClick (fun _ -> Router.navigatePath "/")
+                        prop.style [
+                            style.cursor "pointer"
                         ]
                     ]
                 ]
+            ]
+
+            NavbarContent [
+                prop.className [ "sm:flex"; "gap-4" ]
+                prop.custom ("justify", "center")
+                prop.children [
+                    NavbarItem [
+                        Link [
+                            prop.text "Products"
+                            color "foreground"
+                            prop.onClick (fun _ -> Router.navigatePath "/products")
+                            prop.style [
+                                style.cursor "pointer"
+                            ]
+                        ]
+                    ]
+
+                    NavbarItem [
+                        prop.custom ("isActive", ())
+                        prop.children [
+                            Link [
+                                prop.text "About Us"
+                                prop.onClick (fun _ -> Router.navigatePath "/about")
+                                prop.style [
+                                style.cursor "pointer"
+                            ]
+                            ]
+                        ]
+                    ]
                 
-                NavbarItem [
-                    Link [
-                        color "foreground"
-                        prop.href "#"
-                        prop.text "Contact"
+                    NavbarItem [
+                        Link [
+                            prop.text "Contact"
+                            color "foreground"
+                            prop.onClick (fun _ -> Router.navigatePath "/contact")
+                            prop.style [
+                                style.cursor "pointer"
+                            ]
+                        ]
                     ]
                 ]
             ]
-        ]
 
-        NavbarContent [
-            prop.custom ("justify", "end")
-            prop.children [
-                NavbarItem [
-                    Button [
-                        color "primary"
-                        prop.href "#"
-                        prop.custom ("variant", "flat")
-                        prop.text "Cart"
+            NavbarContent [
+                prop.custom ("justify", "end")
+                prop.children [
+                    NavbarItem [
+                        Button [
+                            color "primary"
+                            prop.href "#"
+                            prop.custom ("variant", "flat")
+                            prop.text "Cart"
+                        ]
                     ]
                 ]
             ]
         ]
     ]
+
+[<ReactComponent>]
+let Navbar = function
+| _ -> DefaultNavbar()
