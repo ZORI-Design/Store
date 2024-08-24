@@ -11,7 +11,8 @@ type NextUI =
         : ReactElement =
         React.imported ()
 
-    static member inline color (colorName: string) = prop.custom("color", colorName)
+    static member inline color(colorName: string) = prop.custom ("color", colorName)
+    static member inline justify(position: string) = prop.custom ("justify", position)
 
     // FOLLOW THIS PATTERN AS YOU NEED ADDITIONAL ELEMENTS!
     // Just change the function name from "Button" to whatever you need in both places.
@@ -47,7 +48,6 @@ type NextUI =
 
     static member inline NavbarMenuItem(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "NavbarMenuItem" "@nextui-org/react", createObj !!xs)
-        
+
     static member inline Link(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "Link" "@nextui-org/react", createObj !!xs)
-
