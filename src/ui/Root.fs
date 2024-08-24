@@ -6,6 +6,7 @@ open Store.UI.Error
 open Store.UI.Home
 open Store.UI.About
 open Browser
+open Store.UI.Navbar
 
 [<ReactComponent>]
 let Root () =
@@ -15,6 +16,7 @@ let Root () =
         navigate = Router.navigatePath
         children =
             [
+                Navbar url
                 React.router [
                     router.pathMode
                     router.onUrlChanged setUrl
