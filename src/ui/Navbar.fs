@@ -60,7 +60,9 @@ let DefaultNavbar () =
             NavbarContent [
                 justify "end"
                 prop.children [
-                    NavbarItem [ Button [ color "primary"; prop.custom ("variant", "flat"); prop.text "Cart" ] ]
+                    NavbarItem [
+                        Button [ color "primary"; prop.custom ("variant", "flat"); prop.text "Cart" ]
+                    ]
                 ]
             ]
         ]

@@ -16,4 +16,8 @@ let Error =
         div [ h1 "Error - Page not found"; p "The requested page could not be found." ]
     | InternalError ->
         React.useEffectOnce (fun () -> document.title <- "500 - Internal Error")
-        div [ h1 "Internal Error"; p "The server encountered an error while processing your request." ]
+
+        div [
+            h1 "Internal Error"
+            p "The server encountered an error while processing your request."
+        ]

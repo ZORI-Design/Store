@@ -22,8 +22,7 @@ type NextUI =
     static member inline Navbar(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "Navbar" "@nextui-org/react", createObj !!xs)
 
-    static member inline Navbar(xs: ReactElement list) : ReactElement =
-        NextUI.Navbar [ prop.children xs ]
+    static member inline Navbar(xs: ReactElement list) : ReactElement = NextUI.Navbar [ prop.children xs ]
 
     static member inline NavbarBrand(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "NavbarBrand" "@nextui-org/react", createObj !!xs)
@@ -37,8 +36,7 @@ type NextUI =
     static member inline NavbarItem(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "NavbarItem" "@nextui-org/react", createObj !!xs)
 
-    static member inline NavbarItem(xs: ReactElement list) : ReactElement =
-        NextUI.NavbarItem [ prop.children xs ]
+    static member inline NavbarItem(xs: ReactElement list) : ReactElement = NextUI.NavbarItem [ prop.children xs ]
 
     static member inline NavbarMenuToggle(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "NavbarMenuToggle" "@nextui-org/react", createObj !!xs)
