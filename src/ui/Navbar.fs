@@ -35,45 +35,34 @@ let DefaultNavbar () =
 
             NavbarContent [
                 prop.className [ "sm:flex"; "gap-4" ]
-                prop.style [
-                    length.vw 5 |> style.gap
-                ]
+                prop.style [ length.vw 5 |> style.gap ]
                 prop.custom ("justify", "center")
                 prop.children [
-                
+
                     NavbarItem [
-                            Link [
-                                prop.text "Products"
-                                color "foreground"
-                                prop.onClick (fun _ -> Router.navigatePath "/")
-                                prop.style [
-                                style.fontSize 13
-                                style.cursor "pointer"
-                            ]
+                        Link [
+                            prop.text "Products"
+                            color "foreground"
+                            prop.onClick (fun _ -> Router.navigatePath "/")
+                            prop.style [ style.fontSize 13; style.cursor "pointer" ]
                         ]
                     ]
 
                     NavbarItem [
-                            Link [
-                                prop.text "About ZORI"
-                                color "foreground"
-                                prop.onClick (fun _ -> Router.navigatePath "/about")
-                                prop.style [
-                                style.fontSize 13
-                                style.cursor "pointer"
-                            ]
+                        Link [
+                            prop.text "About ZORI"
+                            color "foreground"
+                            prop.onClick (fun _ -> Router.navigatePath "/about")
+                            prop.style [ style.fontSize 13; style.cursor "pointer" ]
                         ]
                     ]
-                
+
                     NavbarItem [
                         Link [
                             prop.text "Contact Us"
                             color "foreground"
                             prop.onClick (fun _ -> Router.navigatePath "/contact")
-                            prop.style [
-                                style.fontSize 13
-                                style.cursor "pointer"
-                            ]
+                            prop.style [ style.fontSize 13; style.cursor "pointer" ]
                         ]
                     ]
                 ]
@@ -99,5 +88,6 @@ let DefaultNavbar () =
     ]
 
 [<ReactComponent>]
-let Navbar = function
-| _ -> DefaultNavbar()
+let Navbar =
+    function
+    | _ -> DefaultNavbar()
