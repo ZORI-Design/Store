@@ -51,3 +51,15 @@ type NextUI =
     static member inline Link(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "Link" "@nextui-org/react", createObj !!xs)
 
+    static member inline Dropdown(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Dropdown" "@nextui-org/react", createObj !!xs)
+
+    static member inline DropdownTrigger(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "DropdownTrigger" "@nextui-org/react", createObj !!xs)
+
+    static member inline DropdownMenu(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "DropdownMenu" "@nextui-org/react", createObj !!xs)
+
+    static member inline DropdownItem(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "DropdownItem" "@nextui-org/react", createObj !!xs)
+
