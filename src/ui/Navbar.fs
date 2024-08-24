@@ -8,9 +8,19 @@ open Fable.Core.JsInterop
 
 [<ReactComponent>]
 let DefaultNavbar () =
+    let (isMenuOpen, setIsMenuOpen) = React.useState false
+
+    let menuItems = [
+        "Products";
+        "About ZORI";
+        "Contact Us"
+    ]
+
     Navbar [
+        prop.custom ("onMenuOpenChange", setIsMenuOpen)
         prop.style [
-            style.backgroundColor "#ffffff"
+            style.backgroundColor "#ffffff00
+            "
             style.fontFamily "Figtree"
             style.fontWeight 400
             length.vw 8 |> style.height
@@ -25,8 +35,8 @@ let DefaultNavbar () =
                         prop.src <| import "default" "./assets/Logo.svg"
                         prop.onClick (fun _ -> Router.navigatePath "/")
                         prop.style [
-                            length.px 22 |> style.height
-                            length.px 22 |> style.minHeight
+                            length.px 24 |> style.height
+                            length.px 24 |> style.minHeight
                             style.cursor "pointer"
                         ]
                     ]
@@ -34,7 +44,7 @@ let DefaultNavbar () =
             ]
 
             NavbarContent [
-                prop.className [ "sm:flex"; "gap-4" ]
+                prop.className [ "hidden"; "sm:flex"; "gap-4" ]
                 prop.style [ length.vw 5 |> style.gap ]
                 prop.custom ("justify", "center")
                 prop.children [
@@ -70,19 +80,28 @@ let DefaultNavbar () =
 
             NavbarContent [
                 prop.custom ("justify", "end")
+                prop.style [ length.px 32 |> style.gap ]
                 prop.children [
                     NavbarItem [
                         img [
                             prop.src <| import "default" "./assets/Cart.svg"
                             prop.onClick (fun _ -> Router.navigatePath "/")
                             prop.style [
-                                length.px 17 |> style.height
-                                length.px 17 |> style.minHeight
+                                length.px 21 |> style.height
+                                length.px 21 |> style.minHeight
                                 style.cursor "pointer"
                             ]
                         ]
                     ]
+                    
+                    NavbarMenuToggle [
+                        prop.ariaLabel <| if isMenuOpen then "Close menu" else "Open menu"
+                        prop.className "sm:hidden"
+                    ]
                 ]
+            ]
+
+            NavbarMenu [
             ]
         ]
     ]
