@@ -23,7 +23,7 @@ type NextUI =
         Interop.reactApi.createElement (import "Navbar" "@nextui-org/react", createObj !!xs)
 
     static member inline Navbar(xs: ReactElement list) : ReactElement =
-        Interop.reactApi.createElement (import "Navbar" "@nextui-org/react", createObj !![ prop.children xs ])
+        Navbar [ prop.children xs ]
 
     static member inline NavbarBrand(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "NavbarBrand" "@nextui-org/react", createObj !!xs)
