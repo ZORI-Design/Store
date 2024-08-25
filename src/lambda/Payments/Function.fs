@@ -22,8 +22,14 @@ type Function() =
                 match request.QueryStringParameters.TryGetValue "order" with
                 | true, orderNum ->
                     match Json.deserialize<PaymentUpdate> request.Body |> updatePayment orderNum with
-                    | Some result -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = Json.serialize result)
-                    | None -> raise <| new ArgumentException("Invalid update. Are you sure you supplied the correct order ID?")
+                    | Some result ->
+                        new APIGatewayHttpApiV2ProxyResponse(
+                            StatusCode = int HttpStatusCode.OK,
+                            Body = Json.serialize result
+                        )
+                    | None ->
+                        raise
+                        <| new ArgumentException("Invalid update. Are you sure you supplied the correct order ID?")
                 | false, _ -> raise <| new ArgumentException("Missing required parameter order.")
             | method -> raise <| new NotSupportedException(method + " is not a supported method.")
         with ex ->

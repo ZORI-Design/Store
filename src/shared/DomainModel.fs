@@ -265,6 +265,7 @@ type PaymentUpdate =
     | TransactionMade of Transaction
     | StatusUpdated of OrderState
     | TrackingNumberCreated of string
+    | CustomerDataUpdated of Customer
 
 type Catalogue = Product list
 
