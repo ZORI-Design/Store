@@ -19,8 +19,7 @@ let DefaultNavbar () =
     Navbar [
         prop.custom ("onMenuOpenChange", setIsMenuOpen)
         prop.style [
-            style.backgroundColor "#ffffff00
-            "
+            style.backgroundColor "rgba(1, 1, 1, 0)"
             style.fontFamily "Figtree"
             style.fontWeight 400
             length.vw 8 |> style.height
@@ -46,7 +45,7 @@ let DefaultNavbar () =
             NavbarContent [
                 prop.className [ "hidden"; "sm:flex"; "gap-4" ]
                 prop.style [ length.vw 5 |> style.gap ]
-                prop.custom ("justify", "center")
+                justify "center"
                 prop.children [
 
                     NavbarItem [
@@ -79,7 +78,7 @@ let DefaultNavbar () =
             ]
 
             NavbarContent [
-                prop.custom ("justify", "end")
+                justify "end"
                 prop.style [ length.px 32 |> style.gap ]
                 prop.children [
                     NavbarItem [
