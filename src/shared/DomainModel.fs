@@ -261,6 +261,11 @@ type PaymentPlan = {
     Transactions: Transaction list
 }
 
+type PaymentUpdate =
+    | TransactionMade of Transaction
+    | StatusUpdated of OrderState
+    | TrackingNumberCreated of string
+
 type Catalogue = Product list
 
 type Stock = (Product * Quantity) list

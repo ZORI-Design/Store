@@ -58,9 +58,29 @@ let payments (since: DateTimeOffset, until: DateTimeOffset) : PaymentPlan seq =
     genericQuery<PaymentPlan> "Payments" query
 
 let addPayment (payment: PaymentPlan) =
-    let key = payment.Customer.CorrelationId
-    let sort = payment.Order |> snd |> _.OrderNumber.ToString()
+    let key = payment.Order |> snd |> _.OrderNumber.ToString()
+    let sort = payment.Customer.CorrelationId
     genericPut "Payments" { key = key; sort = sort; data = payment }
+
+let updatePayment (orderNumber: string) : PaymentUpdate -> PaymentPlan option =
+    match genericQuery<PaymentPlan> "Payments" (new QueryFilter("key", QueryOperator.Equal, orderNumber)) |> Seq.tryHead with
+    | Some existing ->
+        function
+        | TransactionMade transaction ->
+            let newPayment = { existing with Transactions = transaction :: existing.Transactions }
+            addPayment newPayment
+            Some newPayment
+        | StatusUpdated state ->
+            let newState = (state, DateTimeOffset.UtcNow) :: (fst existing.Order)
+            let newPayment = { existing with Order = (newState, snd existing.Order) }
+            addPayment newPayment
+            Some newPayment
+        | TrackingNumberCreated trackingNum ->
+            let newData = { snd existing.Order with TrackingNumber = Some trackingNum }
+            let newPayment = { existing with Order = (fst existing.Order, newData) }
+            addPayment newPayment
+            Some newPayment
+    | None -> fun _ -> None
 
 let leads (since: DateTimeOffset, until: DateTimeOffset) : Lead seq =
     let query =

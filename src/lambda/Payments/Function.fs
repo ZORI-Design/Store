@@ -1,24 +1,33 @@
 namespace Store.Lambdas.Payments
 
-
-open Amazon.Lambda.Core
-
 open System
+open Amazon.Lambda.Core
+open FSharp.Json
+open Store.Shared.DomainModel
+open Amazon.Lambda.APIGatewayEvents
+open Store.Crm
+open System.Net
 
-
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [<assembly: LambdaSerializer(typeof<Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer>)>]
 ()
 
-
 type Function() =
-    /// <summary>
-    /// A simple function that takes a string and does a ToUpper
-    /// </summary>
-    /// <param name="input">The event for the Lambda function handler to process.</param>
-    /// <param name="context">The ILambdaContext that provides methods for logging and describing the Lambda environment.</param>
-    /// <returns></returns>
-    member __.FunctionHandler (input: string) (_: ILambdaContext) =
-        match input with
-        | null -> String.Empty
-        | _ -> input.ToUpper()
+    member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
+        try
+            match request.RequestContext.Http.Method.ToUpperInvariant() with
+            | "POST" ->
+                Json.deserialize<PaymentPlan> request.Body |> addPayment
+                new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK)
+            | "PUT" ->
+                match request.QueryStringParameters.TryGetValue "order" with
+                | true, orderNum ->
+                    match Json.deserialize<PaymentUpdate> request.Body |> updatePayment orderNum with
+                    | Some result -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = Json.serialize result)
+                    | None -> raise <| new ArgumentException("Invalid update. Are you sure you supplied the correct order ID?")
+                | false, _ -> raise <| new ArgumentException("Missing required parameter order.")
+            | method -> raise <| new NotSupportedException(method + " is not a supported method.")
+        with ex ->
+            new APIGatewayHttpApiV2ProxyResponse(
+                StatusCode = int HttpStatusCode.BadRequest,
+                Body = ex.ToString() + "\r\n" + ex.StackTrace
+            )
