@@ -22,7 +22,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Interactions", "src\lambda\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Leads", "src\lambda\Leads\Leads.fsproj", "{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Payments", "src\lambda\Payments\Payments.fsproj", "{D6A186FC-24B8-435F-80D6-C4477F9AC9B5}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Stripe", "src\lambda\Stripe\Stripe.fsproj", "{D6A186FC-24B8-435F-80D6-C4477F9AC9B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
