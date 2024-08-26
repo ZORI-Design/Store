@@ -50,17 +50,48 @@ let addInteraction (interaction: Interaction) =
     genericPut "Interactions" { key = key; sort = sort; data = interaction }
 
 
-let payments (since: DateTimeOffset, until: DateTimeOffset) : PaymentPlan seq =
-    let query =
-        QueryFilter("sort", QueryOperator.GreaterThanOrEqual, since.ToString("o"))
+let payments () : PaymentPlan seq =
+    genericQuery<PaymentPlan> "Payments" (new QueryFilter())
 
-    query.AddCondition("sort", QueryOperator.LessThanOrEqual, until.ToString("o"))
+let paymentsByCustomer (customer: CorrelationId) : PaymentPlan seq =
+    let query = new QueryFilter("sort", QueryOperator.Equal, customer)
     genericQuery<PaymentPlan> "Payments" query
 
+let paymentByOrder (order: string) : PaymentPlan option =
+    let query = new QueryFilter("key", QueryOperator.Equal, order)
+    genericQuery<PaymentPlan> "Payments" query |> Seq.tryExactlyOne
+
 let addPayment (payment: PaymentPlan) =
-    let key = payment.Customer.CorrelationId
-    let sort = payment.Order |> snd |> _.OrderNumber.ToString()
+    let key = payment.Order |> snd |> _.OrderNumber.ToString()
+    let sort = payment.Customer.CorrelationId
     genericPut "Payments" { key = key; sort = sort; data = payment }
+
+let updatePayment (orderNumber: string) : PaymentUpdate -> PaymentPlan option =
+    match
+        genericQuery<PaymentPlan> "Payments" (new QueryFilter("key", QueryOperator.Equal, orderNumber)) |> Seq.tryHead
+    with
+    | Some existing ->
+        function
+        | TransactionMade transaction ->
+            let newPayment = { existing with Transactions = transaction :: existing.Transactions }
+            addPayment newPayment
+            Some newPayment
+        | StatusUpdated state ->
+            let newState = (state, DateTimeOffset.UtcNow) :: (fst existing.Order)
+            let newPayment = { existing with Order = (newState, snd existing.Order) }
+            addPayment newPayment
+            Some newPayment
+        | TrackingNumberCreated trackingNum ->
+            let newData = { snd existing.Order with TrackingNumber = Some trackingNum }
+            let newPayment = { existing with Order = (fst existing.Order, newData) }
+            addPayment newPayment
+            Some newPayment
+        | CustomerDataUpdated customer ->
+            let newPayment = { existing with Customer = customer }
+            addPayment newPayment
+            Some newPayment
+
+    | None -> fun _ -> None
 
 let leads (since: DateTimeOffset, until: DateTimeOffset) : Lead seq =
     let query =
@@ -73,3 +104,9 @@ let addLead (lead: Lead) =
     let key = lead.CorrelationId
     let sort = lead.Impression.Time.ToString("o")
     genericPut "Leads" { key = key; sort = sort; data = lead }
+
+let tryFindCustomer (id: CorrelationId) : Customer option =
+    let paymentCustomers =
+        payments () |> Seq.map _.Customer |> Seq.distinct |> Seq.toList
+
+    paymentCustomers |> List.tryFind (fun c -> c.CorrelationId = id)

@@ -2,7 +2,6 @@ module Store.Test.DomainModel
 
 open Xunit
 open Microsoft.FSharp.Reflection
-open Microsoft.FSharp.Quotations.Patterns
 open Store.Shared
 open System.Reflection
 
