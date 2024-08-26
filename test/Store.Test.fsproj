@@ -27,7 +27,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../src/ui/Store.UI.fsproj" />
+    <ProjectReference Include="..\src\ui\Store.UI.fsproj" />
     <ProjectReference Include="..\src\shared\Store.Shared.fsproj" />
   </ItemGroup>
 </Project>
