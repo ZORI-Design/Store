@@ -12,14 +12,12 @@ open System.Net
 [<assembly: LambdaSerializer(typeof<Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer>)>]
 ()
 
-type PaymentIntent =
-    JsonProvider<"""{"id":"pi_3MtwBwLkdIwHu7ix28a3tqPa","object":"payment_intent","amount":2000,"amount_capturable":0,"amount_details":{"tip":{}},"amount_received":0,"application":null,"application_fee_amount":null,"automatic_payment_methods":{"enabled":true},"canceled_at":null,"cancellation_reason":null,"capture_method":"automatic","client_secret":"pi_3MtwBwLkdIwHu7ix28a3tqPa_secret_YrKJUKribcBjcG8HVhfZluoGH","confirmation_method":"automatic","created":1680800504,"currency":"usd","customer":null,"description":null,"invoice":null,"last_payment_error":null,"latest_charge":null,"livemode":false,"metadata":{"orderNumber":"abc abc"},"next_action":null,"on_behalf_of":null,"payment_method":null,"payment_method_options":{"card":{"installments":null,"mandate_options":null,"network":null,"request_three_d_secure":"automatic"},"link":{"persistent_token":null}},"payment_method_types":["card","link"],"processing":null,"receipt_email":"abc@abc.com","review":null,
-"setup_future_usage":null,"shipping":{"address":{"city":"abc abc","country":"CA","line1":"abc abc","line2":"abc abc","postal_code":"abc abc","state":"BC"},"carrier":"abc abc","name":"abc abc","phone":"abc abc","tracking_number":null},"source":null,"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"requires_payment_method","transfer_data":null,"transfer_group":null}""">
+type PaymentIntent = JsonProvider<"webhook-sample.json">
 
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
-            let payment = PaymentIntent.Load request.Body
+            let payment = PaymentIntent.Parse request.Body
 
             let amount =
                 match payment.Currency.ToUpperInvariant() with

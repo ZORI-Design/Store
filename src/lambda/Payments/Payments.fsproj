@@ -15,10 +15,16 @@
     <Content Include="aws-lambda-tools-defaults.json" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.7.1" />
     <PackageReference Include="Amazon.Lambda.Core" Version="2.2.0" />
-    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.1" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.3" />
+    <PackageReference Include="FSharp.Json" Version="0.4.1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="aws-lambda-tools-defaults.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\crm\Store.Crm.fsproj" />
+    <ProjectReference Include="..\..\shared\Store.Shared.fsproj" />
   </ItemGroup>
 </Project>

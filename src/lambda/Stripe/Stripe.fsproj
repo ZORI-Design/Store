@@ -9,6 +9,9 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="webhook-sample.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Function.fs" />
   </ItemGroup>
   <ItemGroup>
