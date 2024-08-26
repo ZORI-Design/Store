@@ -16,7 +16,7 @@ let DefaultNavbar () =
         prop.custom ("onMenuOpenChange", setIsMenuOpen)
 
         prop.style [
-            (if isMenuOpen then "#F7F4F0" else "rgba(255,255,255,0)") |> style.backgroundColor
+            (if isMenuOpen then "#F2F0ED" else "rgba(255,255,255,0)") |> style.backgroundColor
             style.fontFamily "Figtree"
             style.fontWeight 400
             style.float'.left
@@ -35,6 +35,7 @@ let DefaultNavbar () =
                             length.px 26 |> style.minHeight
                             style.cursor "pointer"
                             (if isMenuOpen then 0 else 100) |> style.filter.invert
+                            style.transitionDurationSeconds 0.3
                         ]
                     ]
                 ]
@@ -42,31 +43,34 @@ let DefaultNavbar () =
 
             NavbarContent [
                 prop.className [ "hidden"; "sm:flex"; "gap-4" ]
-                prop.style [ length.vw 5 |> style.gap ]
+                prop.style [ length.px 72 |> style.gap ]
                 justify "center"
                 prop.children [
 
                     NavbarItem [
                         Link [
+                            prop.className [ "text-small" ]
                             prop.text "Shop"
                             prop.onClick (fun _ -> Router.navigatePath "/")
-                            prop.style [ style.fontSize 13; style.cursor "pointer"; style.color "white" ]
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
                         ]
                     ]
 
                     NavbarItem [
                         Link [
+                            prop.className [ "text-small" ]
                             prop.text "About Us"
                             prop.onClick (fun _ -> Router.navigatePath "/about")
-                            prop.style [ style.fontSize 13; style.cursor "pointer"; style.color "white" ]
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
                         ]
                     ]
 
                     NavbarItem [
                         Link [
+                            prop.className [ "text-small" ]
                             prop.text "Contact"
                             prop.onClick (fun _ -> Router.navigatePath "/contact")
-                            prop.style [ style.fontSize 13; style.cursor "pointer"; style.color "white" ]
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
                         ]
                     ]
                 ]
@@ -84,6 +88,7 @@ let DefaultNavbar () =
                                 length.px 21 |> style.height
                                 style.cursor "pointer"
                                 (if isMenuOpen then 0 else 100) |> style.filter.invert
+                                style.transitionDurationSeconds 0.3
                             ]
                         ]
                     ]
@@ -91,13 +96,16 @@ let DefaultNavbar () =
                     NavbarMenuToggle [
                         prop.ariaLabel <| if isMenuOpen then "Close menu" else "Open menu"
                         prop.className "sm:hidden"
-                        prop.style [ (if isMenuOpen then "black" else "white") |> style.color ]
+                        prop.style [
+                            (if isMenuOpen then "black" else "white") |> style.color
+                            style.transitionDurationSeconds 0.3
+                        ]
                     ]
                 ]
             ]
 
             NavbarMenu [
-                prop.style [ style.paddingTop 0; style.backgroundColor "#F7F4F0" ]
+                prop.style [ style.paddingTop 0; style.backgroundColor "#F2F0ED" ]
                 menuItems
                 |> List.indexed
                 |> List.map (fun (index, item) ->
@@ -105,17 +113,14 @@ let DefaultNavbar () =
                         prop.key $"{item}-{index}"
                         prop.children [
                             Link [
-                                color
-                                <| if index = 2 then "foreground"
-                                   else if index = menuItems.Length - 1 then "danger"
-                                   else "foreground"
+                                color "foreground"
                                 prop.className "w-full"
                                 prop.style [
                                     style.fontFamily "the-seasons"
-                                    length.perc 320 |> style.fontSize
                                     length.fitContent |> style.height
-                                    (if item = "Shop" then 120 else 30) |> style.paddingTop
+                                    (if index = 0 then 120 else 40) |> style.paddingTop
                                 ]
+                                prop.className [ "text-large" ]
                                 prop.text item
                             ]
                         ]
