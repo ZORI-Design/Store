@@ -16,7 +16,7 @@ let DefaultNavbar () =
         prop.custom ("onMenuOpenChange", setIsMenuOpen)
 
         prop.style [
-            (if isMenuOpen then "#F2F0ED" else "rgba(255,255,255,0)") |> style.backgroundColor
+            (if isMenuOpen then "#F2F0ED" else "rgba(255, 255, 255, 0)") |> style.backgroundColor
             style.fontFamily "Figtree"
             style.fontWeight 400
             style.float'.left
@@ -32,7 +32,6 @@ let DefaultNavbar () =
                         prop.onClick (fun _ -> Router.navigatePath "/")
                         prop.style [
                             length.px 26 |> style.height
-                            length.px 26 |> style.minHeight
                             style.cursor "pointer"
                             (if isMenuOpen then 0 else 100) |> style.filter.invert
                             style.transitionDurationSeconds 0.3
@@ -83,7 +82,7 @@ let DefaultNavbar () =
                     NavbarItem [
                         img [
                             prop.src <| import "default" "./assets/Cart.svg"
-                            prop.onClick (fun _ -> Router.navigatePath "/")
+                            prop.onClick (fun _ -> Router.navigatePath "/cart")
                             prop.style [
                                 length.px 21 |> style.height
                                 style.cursor "pointer"

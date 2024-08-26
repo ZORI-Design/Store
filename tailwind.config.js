@@ -33,11 +33,6 @@ export default {
                 medium: "1.5rem", // text-medium
                 large: "1.75rem", // text-large
             },
-            radius: {
-                small: "8px", // rounded-small
-                medium: "12px", // rounded-medium
-                large: "14px", // rounded-large
-            },
         }
     })],
 }
