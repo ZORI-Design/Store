@@ -16,8 +16,9 @@ type Function() =
         try
             match request.RequestContext.Http.Method.ToUpperInvariant() with
             | "POST" ->
-                Json.deserialize<PaymentPlan> request.Body |> addPayment
-                new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK)
+                let payment = Json.deserialize<PaymentPlan> request.Body
+                addPayment payment
+                new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = (snd payment.Order).OrderNumber.ToString())
             | "PUT" ->
                 match request.QueryStringParameters.TryGetValue "order" with
                 | true, orderNum ->
