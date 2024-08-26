@@ -6,4 +6,7 @@ open type Feliz.prop
 
 [<ReactComponent>]
 let Home () =
-    h1 [ text "Home"; className [ "text-3xl"; "font-bold"; "underline" ] ]
+    Html.div [
+        prop.style [ style.backgroundColor "black"; length.vh 100 |> style.height ]
+        prop.text "Home"
+    ]

@@ -4,54 +4,72 @@ open Feliz
 open Feliz.Router
 open type Store.UI.NextUI
 open type Feliz.Html
+open Fable.Core.JsInterop
 
 [<ReactComponent>]
 let DefaultNavbar () =
+    let (isMenuOpen, setIsMenuOpen) = React.useState false
+
+    let menuItems = [ "Shop"; "About Us"; "Contact" ]
+
     Navbar [
-        prop.style [ style.backgroundColor "#ffffff" ]
+        prop.custom ("onMenuOpenChange", setIsMenuOpen)
+
+        prop.style [
+            (if isMenuOpen then "#F2F0ED" else "rgba(255, 255, 255, 0)") |> style.backgroundColor
+            style.fontFamily "Figtree"
+            style.fontWeight 400
+            style.float'.left
+            length.px 44 |> style.minHeight
+            (if isMenuOpen then 0.0 else 0.2) |> style.transitionDelaySeconds
+        ]
 
         prop.children [
             NavbarBrand [
                 prop.children [
-                    p [
-                        prop.text "ZORI"
-                        prop.className [ "font-bold"; "text-inherit" ]
+                    img [
+                        prop.src <| import "default" "./assets/Logo.svg"
                         prop.onClick (fun _ -> Router.navigatePath "/")
-                        prop.style [ style.cursor "pointer" ]
+                        prop.style [
+                            length.px 26 |> style.height
+                            style.cursor "pointer"
+                            (if isMenuOpen then 0 else 100) |> style.filter.invert
+                            style.transitionDurationSeconds 0.3
+                        ]
                     ]
                 ]
             ]
 
             NavbarContent [
-                prop.className [ "sm:flex"; "gap-4" ]
+                prop.className [ "hidden"; "sm:flex"; "gap-4" ]
+                prop.style [ length.px 72 |> style.gap ]
                 justify "center"
                 prop.children [
-                    NavbarItem [
-                        Link [
-                            prop.text "Products"
-                            color "foreground"
-                            prop.onClick (fun _ -> Router.navigatePath "/products")
-                            prop.style [ style.cursor "pointer" ]
-                        ]
-                    ]
 
                     NavbarItem [
-                        prop.children [
-                            Link [
-                                prop.text "About Us"
-                                color "foreground"
-                                prop.onClick (fun _ -> Router.navigatePath "/about")
-                                prop.style [ style.cursor "pointer" ]
-                            ]
+                        Link [
+                            prop.className [ "text-small" ]
+                            prop.text "Shop"
+                            prop.onClick (fun _ -> Router.navigatePath "/")
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
                         ]
                     ]
 
                     NavbarItem [
                         Link [
+                            prop.className [ "text-small" ]
+                            prop.text "About Us"
+                            prop.onClick (fun _ -> Router.navigatePath "/about")
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
+                        ]
+                    ]
+
+                    NavbarItem [
+                        Link [
+                            prop.className [ "text-small" ]
                             prop.text "Contact"
-                            color "foreground"
                             prop.onClick (fun _ -> Router.navigatePath "/contact")
-                            prop.style [ style.cursor "pointer" ]
+                            prop.style [ style.cursor "pointer"; style.color "white" ]
                         ]
                     ]
                 ]
@@ -59,11 +77,55 @@ let DefaultNavbar () =
 
             NavbarContent [
                 justify "end"
+                prop.style [ length.px 40 |> style.gap ]
                 prop.children [
                     NavbarItem [
-                        Button [ color "primary"; prop.custom ("variant", "flat"); prop.text "Cart" ]
+                        img [
+                            prop.src <| import "default" "./assets/Cart.svg"
+                            prop.onClick (fun _ -> Router.navigatePath "/cart")
+                            prop.style [
+                                length.px 21 |> style.height
+                                style.cursor "pointer"
+                                (if isMenuOpen then 0 else 100) |> style.filter.invert
+                                style.transitionDurationSeconds 0.3
+                            ]
+                        ]
+                    ]
+
+                    NavbarMenuToggle [
+                        prop.ariaLabel <| if isMenuOpen then "Close menu" else "Open menu"
+                        prop.className "sm:hidden"
+                        prop.style [
+                            (if isMenuOpen then "black" else "white") |> style.color
+                            style.transitionDurationSeconds 0.3
+                        ]
                     ]
                 ]
+            ]
+
+            NavbarMenu [
+                prop.style [ style.paddingTop 0; style.backgroundColor "#F2F0ED" ]
+                menuItems
+                |> List.indexed
+                |> List.map (fun (index, item) ->
+                    NavbarMenuItem [
+                        prop.key $"{item}-{index}"
+                        prop.children [
+                            Link [
+                                color "foreground"
+                                prop.className "w-full"
+                                prop.style [
+                                    style.fontFamily "the-seasons"
+                                    length.fitContent |> style.height
+                                    (if index = 0 then 120 else 40) |> style.paddingTop
+                                ]
+                                prop.className [ "text-large" ]
+                                prop.text item
+                            ]
+                        ]
+
+                    ])
+                |> prop.children
             ]
         ]
     ]
