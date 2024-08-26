@@ -18,7 +18,11 @@ type Function() =
             | "POST" ->
                 let payment = Json.deserialize<PaymentPlan> request.Body
                 addPayment payment
-                new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = (snd payment.Order).OrderNumber.ToString())
+
+                new APIGatewayHttpApiV2ProxyResponse(
+                    StatusCode = int HttpStatusCode.OK,
+                    Body = (snd payment.Order).OrderNumber.ToString()
+                )
             | "PUT" ->
                 match request.QueryStringParameters.TryGetValue "order" with
                 | true, orderNum ->
