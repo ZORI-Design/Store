@@ -110,3 +110,8 @@ let tryFindCustomer (id: CorrelationId) : Customer option =
         payments () |> Seq.map _.Customer |> Seq.distinct |> Seq.toList
 
     paymentCustomers |> List.tryFind (fun c -> c.CorrelationId = id)
+
+let stock () : Stock =
+    genericQuery<Product * Quantity> "Stock" (new QueryFilter())
+    |> Seq.filter (snd >> fun (Quantity q) -> q > 0)
+    |> Seq.toList
