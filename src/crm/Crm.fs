@@ -28,6 +28,10 @@ let genericPut<'a> (tableName: string) (item: DynamoDbTableItem<'a>) : unit =
     let table = Table.LoadTable(dynamoDbClient, tableName)
     serialize item |> Document.FromJson |> table.PutItemAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore
 
+let genericDelete<'a> (tableName: string) (item: DynamoDbTableItem<'a>) : unit =
+    let table = Table.LoadTable(dynamoDbClient, tableName)
+    serialize item |> Document.FromJson |> table.DeleteItemAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore
+
 /// <summary>Gets all interactions of the specified type.</summary>
 /// <param name="interactionType">Use <see langword="nameof" /> to get this value.</param>
 let interactions (interactionType: string) : Interaction seq =
@@ -116,3 +120,47 @@ let stock () : Stock =
 
 let catalogue () : Catalogue =
     genericQuery<Product * Quantity> "Stock" (new QueryFilter()) |> Seq.map fst
+
+let createProduct (product: Product) : Result<Product, string> =
+    let (key, sort) = (product.Name, product.Collection.Name)
+    let filter = QueryFilter("key", QueryOperator.Equal, key)
+    filter.AddCondition("sort", QueryOperator.Equal, sort)
+
+    if genericQuery<Product * Quantity> "Stock" filter |> Seq.isEmpty then
+        genericPut "Stock" { key = key; sort = sort; data = (product, Quantity 0) }
+        Ok product
+    else
+        Error "Product already exists."
+
+let updateProduct (product: Product) : Result<Quantity, string> =
+    let (key, sort) = (product.Name, product.Collection.Name)
+    let filter = QueryFilter("key", QueryOperator.Equal, key)
+    filter.AddCondition("sort", QueryOperator.Equal, sort)
+
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
+    | Some(_, q) ->
+        genericPut "Stock" { key = key; sort = sort; data = (product, q) }
+        Ok q
+    | None -> Error "Product does not exist."
+
+let deleteProduct (product: Product) : Result<Quantity, string> =
+    let (key, sort) = (product.Name, product.Collection.Name)
+    let filter = QueryFilter("key", QueryOperator.Equal, key)
+    filter.AddCondition("sort", QueryOperator.Equal, sort)
+
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
+    | Some(_, q) ->
+        genericDelete "Stock" { key = key; sort = sort; data = (product, q) }
+        Ok q
+    | None -> Error "Product does not exist."
+
+let updateStockQuantity (product: Product) (quantity: Quantity) : Result<unit, string> =
+    let (key, sort) = (product.Name, product.Collection.Name)
+    let filter = QueryFilter("key", QueryOperator.Equal, key)
+    filter.AddCondition("sort", QueryOperator.Equal, sort)
+
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
+    | Some(p, _) ->
+        genericPut "Stock" { key = key; sort = sort; data = (p, quantity) }
+        Ok()
+    | None -> Error "Product does not exist."
