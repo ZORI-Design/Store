@@ -267,6 +267,6 @@ type PaymentUpdate =
     | TrackingNumberCreated of string
     | CustomerDataUpdated of Customer
 
-type Catalogue = Product list
+type Catalogue = Product seq
 
-type Stock = (Product * Quantity) list
+type Stock = (Product * Quantity) seq
