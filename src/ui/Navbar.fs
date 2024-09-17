@@ -28,7 +28,7 @@ let DefaultNavbar () =
             NavbarBrand [
                 prop.children [
                     img [
-                        prop.src <| import "default" "./assets/Logo.svg"
+                        prop.src <| import "default" "./assets/logo.svg"
                         prop.onClick (fun _ -> Router.navigatePath "/")
                         prop.style [
                             length.px 26 |> style.height
@@ -81,7 +81,7 @@ let DefaultNavbar () =
                 prop.children [
                     NavbarItem [
                         img [
-                            prop.src <| import "default" "./assets/Cart.svg"
+                            prop.src <| import "default" "./assets/cart.svg"
                             prop.onClick (fun _ -> Router.navigatePath "/cart")
                             prop.style [
                                 length.px 21 |> style.height
