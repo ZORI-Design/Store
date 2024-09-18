@@ -4,6 +4,8 @@ open Feliz
 open type Feliz.Html
 open type Feliz.prop
 open type NextUI
+open Fable.Core.JsInterop
+open Feliz.Router
 
 [<ReactComponent>]
 let Home () =
@@ -65,16 +67,37 @@ let Home () =
                             ]
                         ]
                     ]
+
                     div [
+                        className [ "sm:flex"; "gap-2" ]
+                        prop.onClick (fun _ -> Router.navigatePath "/about")
                         style [
                             length.vh 3 |> style.marginTop
-                            style.textAlign.center
                             style.fontFamily "Figtree"
-                            length.calc "12px + 0.26vw" |> style.fontSize
-                            style.color "white"
                             style.fontWeight 400
+                            // The following insanity is because Safari:
+                            style.display.flex
+                            style.custom ("-webkit-justify-content", "center")
+                            style.justifyContent.center
+                            style.custom ("-webkit-align-items", "center")
+                            style.alignItems.center
                         ]
-                        text "Hear Our Story 🡢"
+                        children [
+                            Link [
+                                className [ "text-small" ]
+                                text "Hear Our Story"
+                                prop.onClick (fun _ -> Router.navigatePath "/about")
+                                style [ style.cursor "pointer"; style.color "white" ]
+                            ]
+                            img [
+                                prop.src <| import "default" "./assets/right-arrow.svg"
+                                prop.style [
+                                    length.perc 0.1 |> style.marginTop
+                                    length.px 10 |> style.height
+                                    style.cursor "pointer"
+                                ]
+                            ]
+                        ]
                     ]
                 ]
             ]
