@@ -1,11 +1,12 @@
 ﻿module Store.UI.Home
 
 open Feliz
+open Fable.Core.JsInterop
+open Feliz.Router
+
 open type Feliz.Html
 open type Feliz.prop
 open type NextUI
-open Fable.Core.JsInterop
-open Feliz.Router
 
 [<ReactComponent>]
 let Home () =
@@ -56,11 +57,7 @@ let Home () =
                         ]
                         children [
                             Button [
-                                style [
-                                    style.custom ("margin", "0 auto") // Center-aligning the button.
-                                    style.backgroundColor "white"
-                                    style.fontWeight 550
-                                ]
+                                style [ style.backgroundColor "white"; style.fontWeight 550 ]
                                 custom ("size", "lg")
                                 custom ("radius", "full")
                                 text "Shop Now"
