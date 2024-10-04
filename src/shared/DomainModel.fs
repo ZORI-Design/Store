@@ -12,12 +12,14 @@ type mg // Milligram
 
 type Mass = uint<mg>
 
-type Quantity = | Quantity of int
-                | OutOfStock
+type Quantity =
+    | Quantity of int
+    | OutOfStock
 
-let quantity = function
+let quantity =
+    function
     | 0 -> Some OutOfStock
-    | q when q > 0 && q < 1000 -> Some (Quantity q)
+    | q when q > 0 && q < 1000 -> Some(Quantity q)
     | _ -> None
 
 type PhoneNumber = { DialingCode: string; Number: string }

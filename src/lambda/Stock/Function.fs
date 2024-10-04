@@ -17,7 +17,7 @@ type Function() =
         try
             let fullPath = request.RawPath.Trim('/')
             // Trim it down to just the product name.
-            let path = fullPath[fullPath.IndexOf('/')..].Trim('/')
+            let path = fullPath[fullPath.IndexOf('/') ..].Trim('/')
 
             match request.RequestContext.Http.Method.ToUpperInvariant() with
             | "GET" when path |> String.IsNullOrEmpty ->

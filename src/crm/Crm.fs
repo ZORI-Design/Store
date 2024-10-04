@@ -150,7 +150,7 @@ let deleteProduct (product: Product) : Result<Quantity, string> =
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
     match genericQuery<Product * Quantity> "Stock" filter |> Seq.toList with
-    | [(_, q)] ->
+    | [ (_, q) ] ->
         genericDelete "Stock" { key = key; sort = sort; data = (product, q) }
         Ok q
     | [] -> Error "Product does not exist."
@@ -162,7 +162,7 @@ let updateStockQuantity (product: Product) (quantity: Quantity) : Result<unit, s
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
     match genericQuery<Product * Quantity> "Stock" filter |> Seq.toList with
-    | [(p, _)] ->
+    | [ (p, _) ] ->
         genericPut "Stock" { key = key; sort = sort; data = (p, quantity) }
         Ok()
     | [] -> Error "Product does not exist."
