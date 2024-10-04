@@ -15,7 +15,9 @@ open Amazon.DynamoDBv2.DocumentModel
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
-            let path = request.RawPath.Trim('/')
+            let fullPath = request.RawPath.Trim('/')
+            // Trim it down to just the product name.
+            let path = fullPath[fullPath.IndexOf('/')..].Trim('/')
 
             match request.RequestContext.Http.Method.ToUpperInvariant() with
             | "GET" when path |> String.IsNullOrEmpty ->
