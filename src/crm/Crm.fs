@@ -127,7 +127,7 @@ let createProduct (product: Product) : Result<Product, string> =
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
     if genericQuery<Product * Quantity> "Stock" filter |> Seq.isEmpty then
-        genericPut "Stock" { key = key; sort = sort; data = (product, Quantity 0) }
+        genericPut "Stock" { key = key; sort = sort; data = (product, OutOfStock) }
         Ok product
     else
         Error "Product already exists."
@@ -137,30 +137,33 @@ let updateProduct (product: Product) : Result<Quantity, string> =
     let filter = QueryFilter("key", QueryOperator.Equal, key)
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
-    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
-    | Some(_, q) ->
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.toList with
+    | [ (_, q) ] ->
         genericPut "Stock" { key = key; sort = sort; data = (product, q) }
         Ok q
-    | None -> Error "Product does not exist."
+    | [] -> Error "Product does not exist."
+    | _ -> Error "More than one product exists with that name and collection."
 
 let deleteProduct (product: Product) : Result<Quantity, string> =
     let (key, sort) = (product.Name, product.Collection.Name)
     let filter = QueryFilter("key", QueryOperator.Equal, key)
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
-    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
-    | Some(_, q) ->
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.toList with
+    | [(_, q)] ->
         genericDelete "Stock" { key = key; sort = sort; data = (product, q) }
         Ok q
-    | None -> Error "Product does not exist."
+    | [] -> Error "Product does not exist."
+    | _ -> Error "More than one product exists with that name and collection."
 
 let updateStockQuantity (product: Product) (quantity: Quantity) : Result<unit, string> =
     let (key, sort) = (product.Name, product.Collection.Name)
     let filter = QueryFilter("key", QueryOperator.Equal, key)
     filter.AddCondition("sort", QueryOperator.Equal, sort)
 
-    match genericQuery<Product * Quantity> "Stock" filter |> Seq.tryHead with
-    | Some(p, _) ->
+    match genericQuery<Product * Quantity> "Stock" filter |> Seq.toList with
+    | [(p, _)] ->
         genericPut "Stock" { key = key; sort = sort; data = (p, quantity) }
         Ok()
-    | None -> Error "Product does not exist."
+    | [] -> Error "Product does not exist."
+    | _ -> Error "More than one product exists with that name and collection."

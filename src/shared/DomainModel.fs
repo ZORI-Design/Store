@@ -13,9 +13,12 @@ type mg // Milligram
 type Mass = uint<mg>
 
 type Quantity = | Quantity of int
+                | OutOfStock
 
-let quantity q =
-    if q > 0 && q < 1000 then Some <| Quantity q else None
+let quantity = function
+    | 0 -> Some OutOfStock
+    | q when q > 0 && q < 1000 -> Some (Quantity q)
+    | _ -> None
 
 type PhoneNumber = { DialingCode: string; Number: string }
 
