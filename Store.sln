@@ -26,6 +26,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Stripe", "src\lambda\Stripe
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Payments", "src\lambda\Payments\Payments.fsproj", "{46134A99-4F37-4E93-8EA7-1E283E3F0254}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Stock", "src\lambda\Stock\Stock.fsproj", "{4CDB3D1A-AAFC-4F31-86A8-D30708208C01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{46134A99-4F37-4E93-8EA7-1E283E3F0254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46134A99-4F37-4E93-8EA7-1E283E3F0254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46134A99-4F37-4E93-8EA7-1E283E3F0254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CDB3D1A-AAFC-4F31-86A8-D30708208C01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CDB3D1A-AAFC-4F31-86A8-D30708208C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CDB3D1A-AAFC-4F31-86A8-D30708208C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CDB3D1A-AAFC-4F31-86A8-D30708208C01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{C3C67A9B-FA0A-412A-9FBF-9CA6493107B7} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
 		{D6A186FC-24B8-435F-80D6-C4477F9AC9B5} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
 		{46134A99-4F37-4E93-8EA7-1E283E3F0254} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
+		{4CDB3D1A-AAFC-4F31-86A8-D30708208C01} = {6DF20E2C-FA70-4E62-839F-449DFC83185F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C82AB04-886E-4B63-9F44-C827B09AFB7B}
