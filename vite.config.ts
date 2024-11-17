@@ -12,5 +12,15 @@ export default defineConfig({
         port: 1234,
         strictPort: true,
         host: '0.0.0.0'
+    },
+    build: {
+        rollupOptions: {
+            onwarn(warning, warn) {
+                if (warning.code === "MODULE_LEVEL_DIRECTIVE")
+                    return;
+
+                warn(warning);
+            }
+        }
     }
 });
