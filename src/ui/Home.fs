@@ -10,6 +10,8 @@ open type NextUI
 
 [<ReactComponent>]
 let Home () =
+    let heroAnimation = import "*" "./assets/hero-animation.webm"
+
     div [
         children [
             video [
@@ -24,7 +26,7 @@ let Home () =
                 loop true
                 id "hero-video"
                 children [
-                    source [ src "./assets/hero-animation.webm"; type' "video/webm" ]
+                    source [ src heroAnimation; type' "video/webm" ]
                     Html.text "Your browser does not support the video tag."
                 ]
             ]
@@ -83,12 +85,12 @@ let Home () =
                             Link [
                                 className [ "text-small" ]
                                 text "Hear Our Story"
-                                prop.onClick (fun _ -> Router.navigatePath "/about")
+                                onClick (fun _ -> Router.navigatePath "/about")
                                 style [ style.cursor "pointer"; style.color "white" ]
                             ]
                             img [
-                                prop.src <| import "default" "./assets/right-arrow.svg"
-                                prop.style [
+                                src <| import "default" "./assets/right-arrow.svg"
+                                style [
                                     length.perc 0.1 |> style.marginTop
                                     length.px 10 |> style.height
                                     style.cursor "pointer"
