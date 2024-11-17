@@ -6,9 +6,11 @@
     <DefaultNamespace>Store.UI</DefaultNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Api.fs" />
     <Compile Include="NextUI.fs" />
     <Compile Include="Navbar.fs" />
     <Compile Include="About.fs" />
+    <Compile Include="Product.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Error.fs" />
     <Compile Include="Root.fs" />
@@ -17,5 +19,8 @@
     <PackageReference Include="Fable.SimpleHTTP" Version="3.6.0" />
     <PackageReference Include="Feliz" Version="2.8.0" />
     <PackageReference Include="Feliz.Router" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\shared\Store.Shared.fsproj" />
   </ItemGroup>
 </Project>

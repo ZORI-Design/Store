@@ -40,8 +40,7 @@ let emailAddress (ea: string) =
 type Url = string
 type CorrelationId = string
 
-let correlationId (upper, lower) =
-    UInt128(uint64 upper, uint64 lower).ToString("X32")
+let correlationId (num: uint64) = num.ToString("X32")
 
 type DateOnly = | DateOnly of year: int * month: int * day: int
 

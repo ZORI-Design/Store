@@ -1,11 +1,12 @@
 module Store.UI.Root
 
+open Browser
 open Feliz
 open Feliz.Router
+open Store.UI.About
 open Store.UI.Error
 open Store.UI.Home
-open Store.UI.About
-open Browser
+open Store.UI.Product
 open Store.UI.Navbar
 
 [<ReactComponent>]
@@ -25,6 +26,7 @@ let Root () =
                         | [] -> Home()
                         | [ "about" ] -> About()
                         | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
+                        | [ "product"; productName ] -> Product productName
                         | _ -> Error PageNotFound
                     ]
                 ]
