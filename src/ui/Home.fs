@@ -10,8 +10,6 @@ open type NextUI
 
 [<ReactComponent>]
 let Home () =
-    let heroAnimation = import "*" "./assets/hero-animation.webm"
-
     div [
         children [
             video [
@@ -26,7 +24,7 @@ let Home () =
                 loop true
                 id "hero-video"
                 children [
-                    source [ src heroAnimation; type' "video/webm" ]
+                    source [ src <| import "default" "./assets/hero-animation.webm"; type' "video/webm" ]
                     Html.text "Your browser does not support the video tag."
                 ]
             ]
