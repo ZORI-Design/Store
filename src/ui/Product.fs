@@ -1,15 +1,14 @@
 module Store.UI.Product
 
 open Feliz
-open Fable.Core.JsInterop
-open Feliz.Router
+open Store.Shared.DomainModel
 
 open type Feliz.Html
 open type Feliz.prop
 open type NextUI
 
 [<ReactComponent>]
-let Product (productName: string) =
+let Product (product: Product) =
     div [
         className "flex w-full gap-x-4"
         children [
@@ -44,10 +43,14 @@ let Product (productName: string) =
             div [
                 className "w-5/12 flex flex-col gap-y-8"
                 children [
-                    h1 [ text productName; className "text-5xl" ]
+                    h1 [ text product.Name; className "text-5xl" ]
                     p [
                         children [
-                            Html.text "CAD $293"
+                            match product.Price with
+                            | USD usd -> sprintf "US$%0.2f" usd
+                            | CAD cad -> sprintf "C$%0.2f" cad
+                            | RMB rmb -> sprintf "¥%0.2f" rmb
+                            |> Html.text
                             br []
                             Html.text "Return at 0 cost for 17 days "
                             Link [ text "Read our return policy"; custom ("underline", "always") ]
@@ -69,9 +72,9 @@ let Product (productName: string) =
                     ]
 
                     ul [
-                        li [ text "Material: Gold-plated sterling silver" ]
-                        li [ text "Weight: 20g per pair" ]
-                        li [ text "Dimensions: 5cm x 2cm x 1" ]
+                        li [ sprintf "Material: %A" product.Plating |> text ]
+                        li [ sprintf "Weight: %dmg per pair" product.Mass |> text ]
+                        li [ text "Dimensions: ?" ]
                     ]
 
                     Button [ text "Button"; className "w-1/2" ]

@@ -1,17 +1,35 @@
 module Store.UI.Root
 
+open System
+
 open Browser
+open Browser.Navigator
 open Feliz
 open Feliz.Router
+open Store.Shared.DomainModel
 open Store.UI.About
 open Store.UI.Error
 open Store.UI.Home
 open Store.UI.Product
 open Store.UI.Navbar
+open Store.UI.Api
+open Fable.Core.JsInterop
 
 [<ReactComponent>]
 let Root () =
     let (url, setUrl) = React.useState (Router.currentPath ())
+
+    React.useEffect((fun () -> 
+        let d : BrowserData = {
+            CorrelationId = correlationId <| uint64 0
+            Browser = navigator.userAgent
+            FormFactor = if (emitJsExpr () "navigator.userAgentData.mobile") then MobileBrowser else DesktopBrowser
+            ScreenRes = (window.screen.width |> uint, window.screen.height |> uint)
+            Languages = navigator.languages.Value |> Array.toList
+        }
+        logLoad("http://zorijewelry.com/" + String.concat "/" url, d) |> ignore), 
+        [| box url |]
+    )
 
     NextUI.NextUIProvider {|
         navigate = Router.navigatePath
@@ -26,7 +44,17 @@ let Root () =
                         | [] -> Home()
                         | [ "about" ] -> About()
                         | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
-                        | [ "product"; productName ] -> Product productName
+                        | [ "product"; productName ] ->
+                            let (catalogue, setCatalogue) = React.useState<Catalogue> []
+                            getCatalogue setCatalogue
+
+                            match
+                                catalogue
+                                |> Seq.tryFind (fun ci ->
+                                    ci.Name.Equals(productName, StringComparison.InvariantCultureIgnoreCase))
+                            with
+                            | Some product -> Product product
+                            | None -> Error PageNotFound
                         | _ -> Error PageNotFound
                     ]
                 ]

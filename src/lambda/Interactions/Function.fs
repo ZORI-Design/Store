@@ -2,7 +2,7 @@ namespace Store.Lambdas.Interactions
 
 
 open Amazon.Lambda.Core
-open FSharp.Json
+open Thoth.Json.Net
 open Store.Crm
 open Store.Shared.DomainModel
 open Amazon.Lambda.APIGatewayEvents
@@ -17,7 +17,9 @@ open System.Net
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
-            Json.deserialize<Interaction> request.Body |> addInteraction
+            match Decode.Auto.fromString<Interaction> request.Body with
+            | Ok v -> addInteraction v
+            | Error e -> failwith e
 
             new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK)
         with ex ->
