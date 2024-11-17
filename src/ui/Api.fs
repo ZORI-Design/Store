@@ -11,13 +11,8 @@ let getCatalogue (setCatalog: Catalogue -> unit) : unit =
     |> Promise.iter setCatalog
 
 let logLoad (url: string, browser: BrowserData) =
-    let interaction = ClientInteraction (
-        PageLoad {
-            PageUrl = url
-            Browser = browser
-        },
-        System.DateTimeOffset.UtcNow
-    )
+    let interaction =
+        ClientInteraction(PageLoad { PageUrl = url; Browser = browser }, System.DateTimeOffset.UtcNow)
 
     fetch "https://api.zorijewelry.com/interaction" [
         Method HttpMethod.POST

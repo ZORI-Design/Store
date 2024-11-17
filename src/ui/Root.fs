@@ -19,15 +19,21 @@ open Fable.Core.JsInterop
 let Root () =
     let (url, setUrl) = React.useState (Router.currentPath ())
 
-    React.useEffect((fun () -> 
-        let d : BrowserData = {
-            CorrelationId = correlationId <| uint64 0
-            Browser = navigator.userAgent
-            FormFactor = if (emitJsExpr () "navigator.userAgentData.mobile") then MobileBrowser else DesktopBrowser
-            ScreenRes = (window.screen.width |> uint, window.screen.height |> uint)
-            Languages = navigator.languages.Value |> Array.toList
-        }
-        logLoad("http://zorijewelry.com/" + String.concat "/" url, d) |> ignore), 
+    React.useEffect (
+        (fun () ->
+            let d: BrowserData = {
+                CorrelationId = correlationId <| uint64 0
+                Browser = navigator.userAgent
+                FormFactor =
+                    if (emitJsExpr () "navigator.userAgentData.mobile") then
+                        MobileBrowser
+                    else
+                        DesktopBrowser
+                ScreenRes = (window.screen.width |> uint, window.screen.height |> uint)
+                Languages = navigator.languages.Value |> Array.toList
+            }
+
+            logLoad ("http://zorijewelry.com/" + String.concat "/" url, d) |> ignore),
         [| box url |]
     )
 
