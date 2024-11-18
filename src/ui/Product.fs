@@ -17,15 +17,15 @@ let Product (product: Product) =
                 children [
                     Image [
                         src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-4/5"
+                        className "object-cover aspect-1/1"
                     ]
                     Image [
                         src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-4/5"
+                        className "object-cover aspect-1/1"
                     ]
                     Image [
                         src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-4/5"
+                        className "object-cover aspect-1/1"
                     ]
                 ]
             ]
@@ -49,7 +49,7 @@ let Product (product: Product) =
                             match product.Price with
                             | USD usd -> sprintf "US$%0.2f" usd
                             | CAD cad -> sprintf "C$%0.2f" cad
-                            | RMB rmb -> sprintf "¥%0.2f" rmb
+                            | RMB rmb -> sprintf "ï¿½%0.2f" rmb
                             |> Html.text
                             br []
                             Html.text "Return at 0 cost for 17 days "
