@@ -54,8 +54,9 @@ let Root () =
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
 
                             React.useEffectOnce (fun () ->
-                                getCatalogue (fun c -> printfn "%A" c; setCatalogue c)
-                            )
+                                getCatalogue (fun c ->
+                                    printfn "%A" c
+                                    setCatalogue c))
 
                             match
                                 catalogue

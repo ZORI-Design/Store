@@ -64,8 +64,7 @@ let addInteraction (interaction: Interaction) =
 
     genericPut "Interactions" { key = key; sort = sort; data = interaction }
 
-let payments () : PaymentPlan seq =
-    genericScan<PaymentPlan> "Payments"
+let payments () : PaymentPlan seq = genericScan<PaymentPlan> "Payments"
 
 let paymentsByCustomer (customer: CorrelationId) : PaymentPlan seq =
     let query = new QueryFilter("sort", QueryOperator.Equal, customer)

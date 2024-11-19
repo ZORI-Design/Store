@@ -15,31 +15,32 @@ open Amazon.DynamoDBv2.DocumentModel
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
-            let pathParam = match request.PathParameters.TryGetValue "product" with
-                            | true, v -> Some v
-                            | false, _ -> None
+            let pathParam =
+                match request.PathParameters.TryGetValue "product" with
+                | true, v -> Some v
+                | false, _ -> None
 
             match request.RequestContext.Http.Method.ToUpperInvariant(), pathParam with
             | "GET", None ->
                 stock ()
                 |> Seq.toArray
-                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "GET", Some c when c.Equals("catalogue", StringComparison.InvariantCultureIgnoreCase) ->
                 catalogue ()
                 |> Seq.toArray
-                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "GET", Some product ->
                 genericQuery<Product * Quantity> "Stock" (new QueryFilter("key", QueryOperator.Equal, product))
                 |> Seq.toArray
-                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "PUT", Some path ->
                 match request.QueryStringParameters.TryGetValue "q" with
                 | true, i -> Some i
                 | false, _ -> None
-                |> Option.bind(fun s ->
+                |> Option.bind (fun s ->
                     match Int32.TryParse s with
                     | true, i -> Some i
                     | false, _ -> None)
