@@ -7,7 +7,7 @@ open Fetch
 let getCatalogue (callback: Catalogue -> unit) : unit =
     fetch "https://api.zorijewelry.com/stock/catalogue" []
     |> Promise.bind _.text()
-    |> Promise.map Decode.Auto.fromString<Catalogue>
+    |> Promise.map (fun s -> Decode.Auto.fromString<Catalogue>(s, extra = (Extra.empty |> Extra.withDecimal)))
     |> Promise.iter (Result.map callback >> printfn "%A")
 
 let logLoad (url: string, browser: BrowserData) =

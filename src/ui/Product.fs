@@ -7,26 +7,25 @@ open type Feliz.Html
 open type Feliz.prop
 open type NextUI
 
+[<Measure>]
+type g
+
 [<ReactComponent>]
 let Product (product: Product) =
+    let (selectedImage, setSelectedImage) = React.useState 0
     div [
         className "flex w-full gap-x-4"
         children [
             div [
                 className "flex flex-col w-1/12 gap-y-4"
                 children [
-                    Image [
-                        src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-1/1"
-                    ]
-                    Image [
-                        src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-1/1"
-                    ]
-                    Image [
-                        src "https://nextui.org/images/hero-card-complete.jpeg"
-                        className "object-cover aspect-1/1"
-                    ]
+                    for (idx, a) in product.Assets |> List.indexed do
+                        yield Image [
+                            src a
+                            className "object-cover aspect-1/1"
+                            onClick (fun _ -> setSelectedImage idx)
+                            id idx
+                        ]
                 ]
             ]
 
@@ -34,7 +33,7 @@ let Product (product: Product) =
                 className "w-1/2"
                 children [
                     Image [
-                        src "https://nextui.org/images/hero-card-complete.jpeg"
+                        src (if product.Assets.IsEmpty then product.Thumbnail else product.Assets[selectedImage])
                         className "object-cover aspect-4/5 w-full justify-self-center"
                     ]
                 ]
@@ -73,7 +72,7 @@ let Product (product: Product) =
 
                     ul [
                         li [ sprintf "Material: %A" product.Plating |> text ]
-                        li [ sprintf "Weight: %dmg per pair" product.Mass |> text ]
+                        li [ sprintf "Weight: %.1f g per pair" ((float product.Mass) * 1.0<mg> / 1000.0<mg/g>) |> text ]
                         li [ text "Dimensions: ?" ]
                     ]
 
