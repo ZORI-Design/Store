@@ -61,3 +61,14 @@ type NextUI =
 
     static member inline DropdownItem(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "DropdownItem" "@nextui-org/react", createObj !!xs)
+
+    static member inline Image(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Image" "@nextui-org/react", createObj !!xs)
+
+    static member inline Accordion(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Accordion" "@nextui-org/react", createObj !!xs)
+
+    static member inline Accordion(xs: ReactElement list) : ReactElement = NextUI.Accordion [ prop.children xs ]
+
+    static member inline AccordionItem(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "AccordionItem" "@nextui-org/react", createObj !!xs)

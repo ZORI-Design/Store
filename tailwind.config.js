@@ -7,7 +7,12 @@ export default {
         "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
-        extend: {},
+        extend: {
+            aspectRatio: {
+                '1/1': '1 / 1',
+                '4/5': '4 / 5'
+            }
+        },
         screens: {
             'sm': '640px',
             'md': '768px',

@@ -2,7 +2,7 @@ namespace Store.Lambdas.Stock
 
 open System
 open Amazon.Lambda.Core
-open FSharp.Json
+open Thoth.Json.Net
 open Store.Shared.DomainModel
 open Amazon.Lambda.APIGatewayEvents
 open Store.Crm
@@ -15,23 +15,30 @@ open Amazon.DynamoDBv2.DocumentModel
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
-            let fullPath = request.RawPath.Trim('/')
-            // Trim it down to just the product name.
-            let path = fullPath[fullPath.IndexOf('/') ..].Trim('/')
-
-            match request.RequestContext.Http.Method.ToUpperInvariant() with
-            | "GET" when path |> String.IsNullOrEmpty ->
-                stock ()
-                |> Json.serialize
-                |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
-            | "GET" ->
-                genericQuery<Product * Quantity> "Stock" (new QueryFilter("key", QueryOperator.Equal, path))
-                |> Seq.toArray
-                |> Json.serialize
-                |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
-            | "PUT" ->
-                match request.PathParameters.TryGetValue "q" with
+            let pathParam =
+                match request.PathParameters.TryGetValue "product" with
                 | true, v -> Some v
+                | false, _ -> None
+
+            match request.RequestContext.Http.Method.ToUpperInvariant(), pathParam with
+            | "GET", None ->
+                stock ()
+                |> Seq.toArray
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
+            | "GET", Some c when c.Equals("catalogue", StringComparison.InvariantCultureIgnoreCase) ->
+                catalogue ()
+                |> Seq.toArray
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
+            | "GET", Some product ->
+                genericQuery<Product * Quantity> "Stock" (new QueryFilter("key", QueryOperator.Equal, product))
+                |> Seq.toArray
+                |> fun s -> Encode.Auto.toString (s, extra = (Extra.empty |> Extra.withDecimal))
+                |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
+            | "PUT", Some path ->
+                match request.QueryStringParameters.TryGetValue "q" with
+                | true, i -> Some i
                 | false, _ -> None
                 |> Option.bind (fun s ->
                     match Int32.TryParse s with
@@ -53,7 +60,7 @@ type Function() =
                         Body = "Invalid request. Is your quantity valid?"
                     )
                 )
-            | method -> raise <| new NotSupportedException(method + " is not a supported method.")
+            | method, _ -> raise <| new NotSupportedException(method + " is not a supported method.")
         with ex ->
             new APIGatewayHttpApiV2ProxyResponse(
                 StatusCode = int HttpStatusCode.BadRequest,
