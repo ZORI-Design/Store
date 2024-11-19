@@ -25,7 +25,7 @@ let Root () =
                 CorrelationId = correlationId <| uint64 0
                 Browser = navigator.userAgent
                 FormFactor =
-                    if (emitJsExpr () "navigator.userAgentData.mobile") then
+                    if (emitJsExpr () "(navigator.userAgentData?.mobile ?? false)") then
                         MobileBrowser
                     else
                         DesktopBrowser
