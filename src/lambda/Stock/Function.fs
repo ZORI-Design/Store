@@ -21,7 +21,7 @@ type Function() =
 
             match request.RequestContext.Http.Method.ToUpperInvariant() with
             | "GET" when path |> String.IsNullOrEmpty ->
-                stock ()
+                catalogue ()
                 |> Json.serialize
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "GET" ->
