@@ -4,11 +4,11 @@ open Store.Shared.DomainModel
 open Thoth.Json
 open Fetch
 
-let getCatalogue (setCatalog: Catalogue -> unit) : unit =
+let getCatalogue (callback: Catalogue -> unit) : unit =
     fetch "https://api.zorijewelry.com/stock" []
-    |> Promise.bind _.json()
-    |> Promise.map (fun i -> i :?> Catalogue)
-    |> Promise.iter setCatalog
+    |> Promise.bind _.text()
+    |> Promise.map (fun i -> printfn "%s" i; Decode.Auto.fromString<Catalogue> i)
+    |> Promise.iter (Result.map callback >> ignore)
 
 let logLoad (url: string, browser: BrowserData) =
     let interaction =

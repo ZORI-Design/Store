@@ -52,7 +52,10 @@ let Root () =
                         | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
                         | [ "product"; productName ] ->
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
-                            getCatalogue setCatalogue
+
+                            React.useEffectOnce (fun () ->
+                                getCatalogue setCatalogue
+                            )
 
                             match
                                 catalogue

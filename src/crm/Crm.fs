@@ -24,6 +24,17 @@ let genericQuery<'a> (tableName: string) (query: QueryFilter) : 'a seq =
     |> Seq.map deserialize<DynamoDbTableItem<'a>>
     |> Seq.map _.data
 
+let genericScan<'a> (tableName: string) : 'a seq =
+    let table = Table.LoadTable(dynamoDbClient, tableName)
+    let scan = table.Scan(new ScanOperationConfig())
+
+    scan.GetRemainingAsync()
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+    |> Seq.map _.ToJson()
+    |> Seq.map deserialize<DynamoDbTableItem<'a>>
+    |> Seq.map _.data
+
 let genericPut<'a> (tableName: string) (item: DynamoDbTableItem<'a>) : unit =
     let table = Table.LoadTable(dynamoDbClient, tableName)
     serialize item |> Document.FromJson |> table.PutItemAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore
@@ -53,9 +64,8 @@ let addInteraction (interaction: Interaction) =
 
     genericPut "Interactions" { key = key; sort = sort; data = interaction }
 
-
 let payments () : PaymentPlan seq =
-    genericQuery<PaymentPlan> "Payments" (new QueryFilter())
+    genericScan<PaymentPlan> "Payments"
 
 let paymentsByCustomer (customer: CorrelationId) : PaymentPlan seq =
     let query = new QueryFilter("sort", QueryOperator.Equal, customer)
@@ -116,10 +126,10 @@ let tryFindCustomer (id: CorrelationId) : Customer option =
     paymentCustomers |> List.tryFind (fun c -> c.CorrelationId = id)
 
 let stock () : Stock =
-    genericQuery<Product * Quantity> "Stock" (new QueryFilter()) |> Seq.filter (snd >> fun (Quantity q) -> q > 0)
+    genericScan<Product * Quantity> "Stock" |> Seq.filter (snd >> fun (Quantity q) -> q > 0)
 
 let catalogue () : Catalogue =
-    genericQuery<Product * Quantity> "Stock" (new QueryFilter()) |> Seq.map fst
+    genericScan<Product * Quantity> "Stock" |> Seq.map fst
 
 let createProduct (product: Product) : Result<Product, string> =
     let (key, sort) = (product.Name, product.Collection.Name)
