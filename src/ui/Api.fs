@@ -7,8 +7,8 @@ open Fetch
 let getCatalogue (callback: Catalogue -> unit) : unit =
     fetch "https://api.zorijewelry.com/stock/catalogue" []
     |> Promise.bind _.text()
-    |> Promise.map (fun i -> printfn "%s" i; Decode.Auto.fromString<Catalogue> i)
-    |> Promise.iter (Result.map callback >> ignore)
+    |> Promise.map Decode.Auto.fromString<Catalogue>
+    |> Promise.iter (Result.map callback >> printfn "%A")
 
 let logLoad (url: string, browser: BrowserData) =
     let interaction =

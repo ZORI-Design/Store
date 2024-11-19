@@ -2,7 +2,7 @@ namespace Store.Lambdas.Stock
 
 open System
 open Amazon.Lambda.Core
-open FSharp.Json
+open Thoth.Json.Net
 open Store.Shared.DomainModel
 open Amazon.Lambda.APIGatewayEvents
 open Store.Crm
@@ -23,17 +23,17 @@ type Function() =
             | "GET", None ->
                 stock ()
                 |> Seq.toArray
-                |> Json.serialize
+                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "GET", Some c when c.Equals("catalogue", StringComparison.InvariantCultureIgnoreCase) ->
                 catalogue ()
                 |> Seq.toArray
-                |> Json.serialize
+                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "GET", Some product ->
                 genericQuery<Product * Quantity> "Stock" (new QueryFilter("key", QueryOperator.Equal, product))
                 |> Seq.toArray
-                |> Json.serialize
+                |> fun s -> Encode.Auto.toString(s, extra = (Extra.empty |> Extra.withDecimal))
                 |> fun b -> new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Body = b)
             | "PUT", Some path ->
                 match request.QueryStringParameters.TryGetValue "q" with
