@@ -3,7 +3,6 @@ module Store.UI.Root
 open System
 
 open Browser
-open Browser.Navigator
 open Feliz
 open Feliz.Router
 open Store.Shared.DomainModel
@@ -61,7 +60,7 @@ let Root () =
                                     ci.Name.Equals(productName, StringComparison.InvariantCultureIgnoreCase))
                             with
                             | Some product -> Product product
-                            | None when Seq.isEmpty catalogue -> Html.none
+                            | None when Seq.isEmpty catalogue -> Feliz.ReactSpinners.PulseLoader [ prop.custom ("loading", true) ]
                             | None -> Error PageNotFound
                         | _ -> Error PageNotFound
                     ]
