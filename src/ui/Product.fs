@@ -84,7 +84,13 @@ let Product (product: Product) =
                     ]
 
                     ul [
-                        li [ sprintf "Material: %A" product.Plating |> text ]
+                        li [
+                            match product.Plating with
+                            | Gold14k -> "Gold-plated sterling silver"
+                            | WhiteGold14k -> "White gold-plated sterling silver"
+                            |> sprintf "Material: %s"
+                            |> text
+                        ]
                         li [
                             sprintf "Weight: %.1f g per pair" ((float product.Mass) * 1.0<mg> / 1000.0<mg / g>) |> text
                         ]
