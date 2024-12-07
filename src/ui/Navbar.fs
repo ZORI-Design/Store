@@ -7,7 +7,7 @@ open type Feliz.Html
 open Fable.Core.JsInterop
 
 [<ReactComponent>]
-let DefaultNavbar () =
+let DefaultNavbar (solidBackground: bool) =
     let (isMenuOpen, setIsMenuOpen) = React.useState false
 
     let menuItems = [ "Shop"; "About Us"; "Contact" ]
@@ -16,7 +16,7 @@ let DefaultNavbar () =
         prop.custom ("onMenuOpenChange", setIsMenuOpen)
 
         prop.style [
-            (if isMenuOpen then "#F2F0ED" else "rgba(255, 255, 255, 0)") |> style.backgroundColor
+            (if isMenuOpen then "#F2F0ED" elif solidBackground then "#999999" else "rgba(255, 255, 255, 0)") |> style.backgroundColor
             style.fontFamily "Figtree"
             style.fontWeight 400
             style.float'.left
@@ -133,4 +133,5 @@ let DefaultNavbar () =
 [<ReactComponent>]
 let Navbar =
     function
-    | _ -> DefaultNavbar()
+    | [] -> DefaultNavbar false
+    | _ -> DefaultNavbar true

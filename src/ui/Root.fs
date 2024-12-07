@@ -52,7 +52,7 @@ let Root () =
                         | [ "product"; productName ] ->
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
 
-                            React.useEffectOnce (fun () -> getCatalogue setCatalogue)
+                            //React.useEffectOnce (fun () -> getCatalogue setCatalogue)
 
                             match
                                 catalogue
@@ -60,7 +60,21 @@ let Root () =
                                     ci.Name.Equals(productName, StringComparison.InvariantCultureIgnoreCase))
                             with
                             | Some product -> Product product
-                            | None when Seq.isEmpty catalogue -> Feliz.ReactSpinners.PulseLoader [ prop.custom ("loading", true) ]
+                            | None when Seq.isEmpty catalogue -> Html.div [
+                                    prop.style [
+                                        style.top 0
+                                        style.left 0
+                                        style.right 0
+                                        style.bottom 0
+                                        style.position.absolute
+                                        style.display.flex
+                                        style.alignItems.center
+                                        style.justifyContent.center
+                                    ]
+                                    prop.children [
+                                        Feliz.ReactSpinners.ClipLoader [ prop.custom ("loading", true) ]
+                                    ]
+                                ]
                             | None -> Error PageNotFound
                         | _ -> Error PageNotFound
                     ]
