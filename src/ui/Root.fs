@@ -52,7 +52,7 @@ let Root () =
                         | [ "product"; productName ] ->
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
 
-                            //React.useEffectOnce (fun () -> getCatalogue setCatalogue)
+                            React.useEffectOnce (fun () -> getCatalogue setCatalogue)
 
                             match
                                 catalogue
