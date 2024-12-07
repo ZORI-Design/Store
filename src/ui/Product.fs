@@ -12,7 +12,9 @@ open Fable.Core
 [<Measure>]
 type g
 
-let stripePromise = loadStripe "pk_test_51PpM8D091MsxMkVkERmhzCAXb8Jvx0mlNO70qaw2hu428pAVotvH17izg8RWlwgXq5ii2a3HGzolZ8A9unf1aJDZ00QgSNfYmy"
+let stripePromise =
+    loadStripe
+        "pk_test_51PpM8D091MsxMkVkERmhzCAXb8Jvx0mlNO70qaw2hu428pAVotvH17izg8RWlwgXq5ii2a3HGzolZ8A9unf1aJDZ00QgSNfYmy"
 
 [<ReactComponent>]
 let Product (product: Product) =
@@ -96,28 +98,31 @@ let Product (product: Product) =
                     Button [
                         text "Stripe"
                         className "w-1/2"
-                        onClick (fun _ -> 
+                        onClick (fun _ ->
                             promise {
                                 let! stripe = stripePromise
-                                let! result = stripe.redirectToCheckout(U2.Case2 {
-                                    lineItems = [|{
-                                        price = "price_1QTGtE091MsxMkVkDRCwGunf"
-                                        quantity = 1
-                                    }|]
-                                    mode = "payment"
-                                    successUrl = "https://example.com/success"
-                                    cancelUrl = "https://example.com/cancel"
-                                    clientReferenceId = None
-                                    customerEmail = None
-                                    billingAddressCollection = None
-                                    shippingAddressCollection = None
-                                    locale = None
-                                    submitType = Some "pay"
-                                })
+
+                                let! result =
+                                    stripe.redirectToCheckout (
+                                        U2.Case2 {
+                                            lineItems = [|
+                                                { price = "price_1QTGtE091MsxMkVkDRCwGunf"; quantity = 1 }
+                                            |]
+                                            mode = "payment"
+                                            successUrl = "https://example.com/success"
+                                            cancelUrl = "https://example.com/cancel"
+                                            clientReferenceId = None
+                                            customerEmail = None
+                                            billingAddressCollection = None
+                                            shippingAddressCollection = None
+                                            locale = None
+                                            submitType = Some "pay"
+                                        }
+                                    )
+
                                 ignore result
                             }
-                            |> ignore
-                        )
+                            |> ignore)
                     ]
                 ]
             ]
