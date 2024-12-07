@@ -53,10 +53,7 @@ let Root () =
                         | [ "product"; productName ] ->
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
 
-                            React.useEffectOnce (fun () ->
-                                getCatalogue (fun c ->
-                                    printfn "%A" c
-                                    setCatalogue c))
+                            React.useEffectOnce (fun () -> getCatalogue setCatalogue)
 
                             match
                                 catalogue
@@ -64,6 +61,7 @@ let Root () =
                                     ci.Name.Equals(productName, StringComparison.InvariantCultureIgnoreCase))
                             with
                             | Some product -> Product product
+                            | None when Seq.isEmpty catalogue -> Html.none
                             | None -> Error PageNotFound
                         | _ -> Error PageNotFound
                     ]
