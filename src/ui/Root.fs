@@ -60,7 +60,8 @@ let Root () =
                                     ci.Name.Equals(productName, StringComparison.InvariantCultureIgnoreCase))
                             with
                             | Some product -> Product product
-                            | None when Seq.isEmpty catalogue -> Html.div [
+                            | None when Seq.isEmpty catalogue ->
+                                Html.div [
                                     prop.style [
                                         style.top 0
                                         style.left 0
@@ -71,9 +72,7 @@ let Root () =
                                         style.alignItems.center
                                         style.justifyContent.center
                                     ]
-                                    prop.children [
-                                        Feliz.ReactSpinners.ClipLoader [ prop.custom ("loading", true) ]
-                                    ]
+                                    prop.children [ Feliz.ReactSpinners.ClipLoader [ prop.custom ("loading", true) ] ]
                                 ]
                             | None -> Error PageNotFound
                         | _ -> Error PageNotFound

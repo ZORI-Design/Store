@@ -16,7 +16,10 @@ let DefaultNavbar (solidBackground: bool) =
         prop.custom ("onMenuOpenChange", setIsMenuOpen)
 
         prop.style [
-            (if isMenuOpen then "#F2F0ED" elif solidBackground then "#999999" else "rgba(255, 255, 255, 0)") |> style.backgroundColor
+            (if isMenuOpen then "#F2F0ED"
+             elif solidBackground then "#999999"
+             else "rgba(255, 255, 255, 0)")
+            |> style.backgroundColor
             style.fontFamily "Figtree"
             style.fontWeight 400
             style.float'.left
