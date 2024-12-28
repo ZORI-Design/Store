@@ -7,6 +7,7 @@ open Feliz
 open Feliz.Router
 open Store.Shared.DomainModel
 open Store.UI.About
+open Store.UI.Policy
 open Store.UI.Error
 open Store.UI.Home
 open Store.UI.Product
@@ -49,6 +50,7 @@ let Root () =
                         | [] -> Home()
                         | [ "about" ] -> About()
                         | [ "button" ] -> NextUI.Button [ prop.text "Hello!"; prop.custom ("color", "primary") ]
+                        | [ "store-policies" ] -> Policy()
                         | [ "product"; productName ] ->
                             let (catalogue, setCatalogue) = React.useState<Catalogue> []
 
