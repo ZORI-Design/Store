@@ -138,7 +138,17 @@ let DeadNavbar () =
     div [
         prop.style [ style.backgroundColor "transparent" ]
 
-        prop.classes [ "flex"; "justify-center"; "align-center"; "py-3"; "h-12" ]
+        prop.classes [
+            "fixed"
+            "top-0"
+            "left-0"
+            "right-0"
+            "flex"
+            "justify-center"
+            "align-center"
+            "py-3"
+            "h-12"
+        ]
 
         prop.children [
             img [

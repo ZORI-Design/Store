@@ -12,6 +12,7 @@ open Store.UI.Error
 open Store.UI.Home
 open Store.UI.Product
 open Store.UI.Navbar
+open Store.UI.Footer
 open Store.UI.Api
 open Fable.Core.JsInterop
 

@@ -10,3 +10,18 @@ let primitive = {|
         ``600`` = "#212121"
     |}
 |}
+
+let background = primitive.Grey.``200``
+
+let dropdown = primitive.Grey.``400``
+
+let paragraph = primitive.Grey.``500``
+
+let header = primitive.Grey.``600``
+
+let icon = primitive.Grey.``600``
+
+let button = {|
+    background = primitive.Grey.``600``
+    foreground = primitive.Grey.``100``
+|}
