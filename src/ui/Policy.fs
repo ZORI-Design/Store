@@ -98,7 +98,10 @@ let Policy () =
                                     children [
                                         Html.span [
                                             classes [ "text-base" ]
-                                            text "Shipping is free across the US and Canada."
+                                            children [
+                                                Html.span "Shipping is "
+                                                b "free across the US and Canada."
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -107,11 +110,11 @@ let Policy () =
                                     children [
                                         Html.span [
                                             classes [ "text-base" ]
-                                            text (
-                                                "We pack & ship your orders as soon as possible. "
-                                                + "Delivery typically takes 7-10 business days from the time you receive your tracking number, "
-                                                + "though it may vary during holidays (we blame the reindeer traffic)."
-                                            )
+                                            children [
+                                                Html.span "We pack & ship your orders as soon as possible. Delivery typically takes "
+                                                b "7-10 business days"
+                                                Html.span " from the time you receive your tracking number, though it may vary during holidays (we blame the reindeer traffic)."
+                                            ]
                                         ]
                                     ]
                                 ]
@@ -122,8 +125,15 @@ let Policy () =
                     accordionItem "Returns & Exchanges" ".1" [
                         p "Once you receive your jewelry, take all the time you need to fall in love:"
                         br []
-                        p
-                            "ZORI offers 180 days to exchange or 90 days to return your product for a full refund for all orders throughout the US and Canada."
+                        p [
+                            Html.span "ZORI offers "
+                            b "180 days" 
+                            Html.span " to exchange or "
+                            b "90 days"
+                            Html.span " to return your product for "
+                            b "a full refund"
+                            Html.span " for all orders throughout the US and Canada."
+                        ]
                         br []
                         p "A few simple rules to keep the process smooth:"
                         br []
@@ -145,9 +155,19 @@ let Policy () =
                         ul [
                             classes [ "list-decimal"; "list-outside"; "font-light"; "ml-4" ]
                             children [
-                                li "Use the return label included in the package to send your item back to us."
-                                li "Once we receive your package, we'll process it as soon as possible."
-                                li "Refunds will typically appear in your account within 5-10 business days."
+                                li [ 
+                                    Html.span "Use the "
+                                    b "return label"
+                                    Html.span " included in the package to send your item back to us."
+                                ]
+                                li [ 
+                                    Html.span "Once we receive your package, we'll process it "
+                                    b "as soon as possible."
+                                ]
+                                li [ 
+                                    Html.span "Refunds will typically appear in your account within "
+                                    b "5-10 business days."
+                                ]
                             ]
                         ]
                     ]
