@@ -7,3 +7,4 @@ dist
 
 *.ts
 !vite.config.ts
+package-lock.json
