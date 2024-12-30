@@ -21,7 +21,4 @@ let header = primitive.Grey.``600``
 
 let icon = primitive.Grey.``600``
 
-let button = {|
-    background = primitive.Grey.``600``
-    foreground = primitive.Grey.``100``
-|}
+let button = {| background = primitive.Grey.``600``; foreground = primitive.Grey.``100`` |}

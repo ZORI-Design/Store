@@ -98,10 +98,7 @@ let Policy () =
                                     children [
                                         Html.span [
                                             classes [ "text-base" ]
-                                            children [
-                                                Html.span "Shipping is "
-                                                b "free across the US and Canada."
-                                            ]
+                                            children [ Html.span "Shipping is "; b "free across the US and Canada." ]
                                         ]
                                     ]
                                 ]
@@ -111,9 +108,11 @@ let Policy () =
                                         Html.span [
                                             classes [ "text-base" ]
                                             children [
-                                                Html.span "We pack & ship your orders as soon as possible. Delivery typically takes "
+                                                Html.span
+                                                    "We pack & ship your orders as soon as possible. Delivery typically takes "
                                                 b "7-10 business days"
-                                                Html.span " from the time you receive your tracking number, though it may vary during holidays (we blame the reindeer traffic)."
+                                                Html.span
+                                                    " from the time you receive your tracking number, though it may vary during holidays (we blame the reindeer traffic)."
                                             ]
                                         ]
                                     ]
@@ -127,7 +126,7 @@ let Policy () =
                         br []
                         p [
                             Html.span "ZORI offers "
-                            b "180 days" 
+                            b "180 days"
                             Html.span " to exchange or "
                             b "90 days"
                             Html.span " to return your product for "
@@ -155,16 +154,16 @@ let Policy () =
                         ul [
                             classes [ "list-decimal"; "list-outside"; "font-light"; "ml-4" ]
                             children [
-                                li [ 
+                                li [
                                     Html.span "Use the "
                                     b "return label"
                                     Html.span " included in the package to send your item back to us."
                                 ]
-                                li [ 
+                                li [
                                     Html.span "Once we receive your package, we'll process it "
                                     b "as soon as possible."
                                 ]
-                                li [ 
+                                li [
                                     Html.span "Refunds will typically appear in your account within "
                                     b "5-10 business days."
                                 ]

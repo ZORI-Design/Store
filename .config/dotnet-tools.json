@@ -14,14 +14,14 @@
       "commands": [
         "femto"
       ],
-      "rollForward": false
+      "rollForward": true
     },
     "fantomas": {
       "version": "6.3.16",
       "commands": [
         "fantomas"
       ],
-      "rollForward": false
+      "rollForward": true
     },
     "amazon.lambda.tools": {
       "version": "5.10.7",
