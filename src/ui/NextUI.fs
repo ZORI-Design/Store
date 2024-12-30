@@ -72,3 +72,6 @@ type NextUI =
 
     static member inline AccordionItem(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "AccordionItem" "@nextui-org/react", createObj !!xs)
+
+    static member inline Divider(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Divider" "@nextui-org/react", createObj !!xs)
