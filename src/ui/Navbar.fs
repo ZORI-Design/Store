@@ -137,10 +137,7 @@ let DefaultNavbar (solidBackground: bool) =
 [<ReactComponent>]
 let DeadNavbar () =
     div [
-        prop.classes [
-            "w-full"
-            "h-12"
-        ]
+        prop.classes [ "w-full"; "h-12" ]
 
         prop.children [
             div [

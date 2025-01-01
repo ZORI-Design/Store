@@ -40,18 +40,19 @@ let Root () =
     )
 
     React.useEffectOnce (
-        (fun () -> 
+        (fun () ->
             promise {
                 let! resp = Fetch.fetch "https://api.country.is/" []
-                let! json = resp.json()
+                let! json = resp.json ()
                 let value = json :?> {| ip: string; country: string |}
+
                 match value.country with
                 | "CA" -> Canada
-                | "US" | _ -> USA
+                | "US"
+                | _ -> USA
                 |> setCountry
             }
-            |> Promise.start
-        )
+            |> Promise.start)
     )
 
     NextUI.NextUIProvider {|
