@@ -67,13 +67,26 @@ let Policy () =
     div [
         style [ style.backgroundColor Colour.background ]
 
-        classes [ "w-screen"; "min-h-screen"; "pt-32"; "flex"; "flex-col"; "items-center" ]
+        classes [ "w-screen"; "min-h-screen"; "pt-24"; "flex"; "flex-col"; "items-center" ]
 
         children [
+            div [
+                children [
+                    a [
+                        text "← Back to Store"
+                        href "https://theleap.co/@zorijewelry"
+                        classes [ "font-medium" ]
+                    ]
+                ]
+
+                classes [ "sticky"; "top-12"; "w-screen"; "text-center"; "pb-2" ]
+                style [ style.color Colour.header; style.backgroundColor Colour.background ]
+            ]
+
             h1 [
                 text "Store Policies"
 
-                classes [ "text-5xl" ]
+                classes [ "text-5xl"; "mt-12" ]
 
                 style [ style.fontFamily "the-seasons"; style.color Colour.header ]
             ]

@@ -3,6 +3,7 @@
 open Feliz
 open Feliz.Router
 open type Store.UI.NextUI
+open Store.Shared
 open type Feliz.Html
 open Fable.Core.JsInterop
 
@@ -136,7 +137,7 @@ let DefaultNavbar (solidBackground: bool) =
 [<ReactComponent>]
 let DeadNavbar () =
     div [
-        prop.style [ style.backgroundColor "transparent" ]
+        prop.style [ style.backgroundColor Colour.background ]
 
         prop.classes [
             "fixed"
