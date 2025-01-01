@@ -137,24 +137,30 @@ let DefaultNavbar (solidBackground: bool) =
 [<ReactComponent>]
 let DeadNavbar () =
     div [
-        prop.style [ style.backgroundColor Colour.background ]
-
-        prop.classes [
-            "fixed"
-            "top-0"
-            "left-0"
-            "right-0"
-            "flex"
-            "justify-center"
-            "align-center"
-            "py-3"
-            "h-12"
-        ]
+        prop.classes [ "w-full"; "h-12" ]
 
         prop.children [
-            img [
-                prop.src <| import "default" "./assets/logo.svg"
-                prop.style [ length.px 22 |> style.height ]
+            div [
+                prop.style [ style.backgroundColor Colour.background; style.zIndex 2 ]
+
+                prop.classes [
+                    "fixed"
+                    "top-0"
+                    "left-0"
+                    "right-0"
+                    "flex"
+                    "justify-center"
+                    "align-center"
+                    "py-3"
+                    "h-12"
+                ]
+
+                prop.children [
+                    img [
+                        prop.src <| import "default" "./assets/logo.svg"
+                        prop.style [ length.px 22 |> style.height ]
+                    ]
+                ]
             ]
         ]
     ]
@@ -164,4 +170,4 @@ let Navbar =
     function
     | [ "store-policies" ] -> DeadNavbar()
     | [] -> DefaultNavbar false
-    | _ -> DefaultNavbar true
+    | _ -> DeadNavbar()

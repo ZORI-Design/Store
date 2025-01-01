@@ -67,7 +67,7 @@ let Policy () =
     div [
         style [ style.backgroundColor Colour.background ]
 
-        classes [ "w-screen"; "min-h-screen"; "pt-24"; "flex"; "flex-col"; "items-center" ]
+        classes [ "w-full"; "min-h-full"; "pt-12"; "flex"; "flex-col"; "items-center" ]
 
         children [
             div [
@@ -79,7 +79,7 @@ let Policy () =
                     ]
                 ]
 
-                classes [ "sticky"; "top-12"; "w-screen"; "text-center"; "pb-2" ]
+                classes [ "sticky"; "top-12"; "w-full"; "text-center"; "pb-2" ]
                 style [ style.color Colour.header; style.backgroundColor Colour.background ]
             ]
 

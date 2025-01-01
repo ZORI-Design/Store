@@ -17,7 +17,7 @@ let stripePromise =
         "pk_test_51PpM8D091MsxMkVkERmhzCAXb8Jvx0mlNO70qaw2hu428pAVotvH17izg8RWlwgXq5ii2a3HGzolZ8A9unf1aJDZ00QgSNfYmy"
 
 [<ReactComponent>]
-let Product (product: Product) =
+let Product (product: Product) (country: Market) =
     let (selectedImage, setSelectedImage) = React.useState 0
 
     div [
