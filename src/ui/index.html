@@ -18,6 +18,11 @@
         @tailwind components;
         @tailwind utilities;
 
+        html, body, #root, #root>* {
+            height: calc(100% - 12px);
+            width: 100%;
+        }
+
         * {
             font-family: figtree;
             font-weight: 300;
