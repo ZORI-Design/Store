@@ -11,10 +11,11 @@
     "format:check": "dotnet fantomas --check .",
     "preview": "npx vite preview --port 80",
     "test": "dotnet test ./test --nologo --logger \"console;verbosity=normal\"",
-    "publish-lambdas": "npm run publish-lambda-interactions & npm run publish-lambda-leads & npm run publish-lambda-payments & npm run publish-lambda-stock & npm run publish-lambda-stripe",
+    "publish-lambdas": "npm run publish-lambda-interactions & npm run publish-lambda-leads & npm run publish-lambda-payments & npm run publish-lambda-scan & npm run publish-lambda-stock & npm run publish-lambda-stripe",
     "publish-lambda-interactions": "dotnet lambda deploy-function Interactions -pl src/lambda/Interactions",
     "publish-lambda-leads": "dotnet lambda deploy-function Leads -pl src/lambda/Leads",
     "publish-lambda-payments": "dotnet lambda deploy-function Payments -pl src/lambda/Payments",
+    "publish-lambda-scan": "dotnet lambda deploy-function Scan -pl src/lambda/Scan",
     "publish-lambda-stock": "dotnet lambda deploy-function Stock -pl src/lambda/Stock",
     "publish-lambda-stripe": "dotnet lambda deploy-function Stripe -pl src/lambda/Stripe"
   },

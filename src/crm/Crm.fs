@@ -125,7 +125,13 @@ let tryFindCustomer (id: CorrelationId) : Customer option =
     paymentCustomers |> List.tryFind (fun c -> c.CorrelationId = id)
 
 let stock () : Stock =
-    genericScan<Product * Quantity> "Stock" |> Seq.filter (snd >> fun (Quantity q) -> q > 0)
+    genericScan<Product * Quantity> "Stock"
+    |> Seq.filter (
+        snd
+        >> function
+            | (Quantity q) -> q > 0
+            | OutOfStock -> false
+    )
 
 let catalogue () : Catalogue =
     genericScan<Product * Quantity> "Stock" |> Seq.map fst
