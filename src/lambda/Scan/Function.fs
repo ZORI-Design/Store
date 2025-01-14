@@ -16,13 +16,25 @@ open System
 type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
+            let cookies =
+                request.Cookies |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..])) |> dict
+
+            let correlation =
+                match cookies.TryGetValue "correlation" with
+                | true, c -> c
+                | _ ->
+                    [ Random.Shared.NextInt64(); Random.Shared.NextInt64() ]
+                    |> List.map uint64
+                    |> List.sum
+                    |> correlationId
+
             addInteraction (
                 ClientInteraction(
                     PageLoad {
                         PageUrl =
                             sprintf "https://%s%s" request.RequestContext.DomainName request.RequestContext.Http.Path
                         Browser = {
-                            CorrelationId = correlationId <| uint64 0
+                            CorrelationId = correlation
                             Browser = request.RequestContext.Http.UserAgent
                             FormFactor =
                                 match request.Headers.TryGetValue "sec-ch-ua-mobile" with
@@ -43,7 +55,11 @@ type Function() =
 
             new APIGatewayHttpApiV2ProxyResponse(
                 StatusCode = int HttpStatusCode.TemporaryRedirect,
-                Headers = dict [ ("Location", "https://theleap.co/creator/zorijewelry/") ]
+                Headers =
+                    dict [
+                        ("Location", "https://theleap.co/creator/zorijewelry/")
+                        ("Set-Cookie", sprintf "correlation=%s" correlation)
+                    ]
             )
         with ex ->
             new APIGatewayHttpApiV2ProxyResponse(
