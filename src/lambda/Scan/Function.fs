@@ -17,7 +17,9 @@ type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
             let cookies =
-                request.Cookies |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..])) |> dict
+                match request.Cookies with
+                | null -> dict []
+                | _ -> request.Cookies |> Array.filter _.Contains('=') |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..])) |> dict
 
             let correlation =
                 match cookies.TryGetValue "correlation" with
@@ -58,7 +60,7 @@ type Function() =
                 Headers =
                     dict [
                         ("Location", "https://theleap.co/creator/zorijewelry/")
-                        ("Set-Cookie", sprintf "correlation=%s" correlation)
+                        ("Set-Cookie", sprintf "correlation=%s; Max-Age=157680000" correlation) // Max-Age 5yrs
                     ]
             )
         with ex ->

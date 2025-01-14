@@ -19,7 +19,13 @@ type Function() =
     member __.FunctionHandler (request: APIGatewayHttpApiV2ProxyRequest) (_: ILambdaContext) =
         try
             let cookies =
-                request.Cookies |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..])) |> dict
+                match request.Cookies with
+                | null -> dict []
+                | _ ->
+                    request.Cookies
+                    |> Array.filter _.Contains('=')
+                    |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..]))
+                    |> dict
 
             match Decode.Auto.fromString<Interaction> request.Body with
             | Ok v ->
@@ -33,7 +39,11 @@ type Function() =
                         |> correlationId
 
                 addInteraction v
-                new APIGatewayHttpApiV2ProxyResponse(StatusCode = int HttpStatusCode.OK, Headers = dict [("Set-Cookie", sprintf "correlation=%s" correlation)])
+
+                new APIGatewayHttpApiV2ProxyResponse(
+                    StatusCode = int HttpStatusCode.OK,
+                    Headers = dict [ ("Set-Cookie", sprintf "correlation=%s; Max-Age=157680000" correlation) ] // Max-Age 5yrs
+                )
             | Error e -> failwith e
 
         with ex ->
