@@ -19,7 +19,11 @@ type Function() =
             let cookies =
                 match request.Cookies with
                 | null -> dict []
-                | _ -> request.Cookies |> Array.filter _.Contains('=') |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..])) |> dict
+                | _ ->
+                    request.Cookies
+                    |> Array.filter _.Contains('=')
+                    |> Array.map (fun (l: string) -> (l.Split('=')[0], l[l.IndexOf('=') + 1 ..]))
+                    |> dict
 
             let correlation =
                 match cookies.TryGetValue "correlation" with
