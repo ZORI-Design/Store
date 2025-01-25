@@ -3,6 +3,7 @@ module Store.UI.Product
 open Feliz
 open Feliz.StripeJs
 open Store.Shared.DomainModel
+open Store.Shared
 
 open type Feliz.Html
 open type Feliz.prop
@@ -20,25 +21,25 @@ let stripePromise =
 let Product (product: Product) (country: Market) =
     let (selectedImage, setSelectedImage) = React.useState 0
 
-    div [
-        className "flex w-full xl:w-3/4 xl:mx-auto gap-x-10 gap-y-2 max-sm:flex-col sm:p-8"
-        children [
-            div [
-                className "flex max-sm:hidden flex-col w-1/12 gap-y-4"
-                children [
-                    for (idx, a) in product.Assets |> List.indexed do
-                        yield
-                            Image [
-                                src a
-                                className "object-cover aspect-1/1"
-                                onClick (fun _ -> setSelectedImage idx)
-                                id idx
-                            ]
-                ]
+    let specRow (header: string) (body: string) =
+        tableRow [
+            tableHeader [
+                text header
+                className "font-bold text-left"
             ]
 
+            tableCell [
+                text body
+                className "text-right"
+            ]
+        ]
+
+    div [
+        className "flex w-full gap-x-10 gap-y-8 flex-col"
+
+        children [
             div [
-                className "w-full sm:w-5/12 flex justify-end flex flex-col gap-y-5"
+                className "w-full flex justify-end flex flex-col gap-y-5"
                 children [
                     img [
                         src (
@@ -51,13 +52,20 @@ let Product (product: Product) (country: Market) =
                     ]
 
                     div [
-                        className "flex sm:hidden w-full gap-2 justify-around"
+                        className "flex w-full gap-2 justify-around"
                         children [
-                            for (idx, a) in product.Assets |> List.indexed do
+                            for (idx, _) in product.Assets |> List.indexed do
                                 yield
-                                    img [
-                                        src a
-                                        className "object-cover aspect-1/1 w-1/6"
+                                    div [
+                                        className "w-2 aspect-square rounded-[50%]"
+                                        style [
+                                            style.backgroundColor (
+                                                if selectedImage = idx then
+                                                    Colour.header
+                                                else
+                                                    Colour.paragraph
+                                            )
+                                        ]
                                         onClick (fun _ -> setSelectedImage idx)
                                         id idx
                                     ]
@@ -67,81 +75,75 @@ let Product (product: Product) (country: Market) =
             ]
 
             div [
-                className "max-sm:px-5 sm:w-1/2 flex flex-col gap-y-4"
+                className "flex w-full flex-col text-center"
                 children [
-                    h1 [ text product.Name; className "text-5xl" ]
-                    p [
-                        children [
-                            match product.Price with
-                            | USD usd -> sprintf "US$%0.2f" usd
-                            | CAD cad -> sprintf "C$%0.2f" cad
-                            | RMB rmb -> sprintf "�%0.2f" rmb
-                            |> Html.text
-                            br []
-                            Html.text "Return at 0 cost for 17 days "
-                            Link [ text "Read our return policy"; custom ("underline", "always") ]
-                        ]
+                    h1 [
+                        text product.Name
+                        className "font-regular text-5xl"
+                        style [ style.fontFamily "the-seasons" ]
                     ]
-                    Accordion [
-                        AccordionItem [
-                            className "xl:w-2/3"
-                            custom (
-                                "title",
-                                p [
-                                    text "One sentence about the product story."
-                                    className "font-semibold text-base"
-                                ]
-                            )
-                            custom ("subtitle", "Read the Story")
-                            children [ Html.text "Example!" ]
-                        ]
+
+                    p [ text product.Description; style [ style.color Colour.subheader ] ]
+                ]
+            ]
+
+            div [
+                className "flex w-full flex-col px-4"
+                children [
+                    h2 [
+                        text "Design Concept"
+                        className "font-bold"
+                    ]
+
+                    p [
+                        text "Lorum Ipsum Dolor Sit Amet"
+                        className "italic text-sm"
+                    ]
+                ]
+            ]
+
+            table [
+                className "mx-4"
+
+                children [
+                    tableBody [
+                        specRow "Material" "Gold-plated sterling silver"
+                        specRow "Weight" "≈ 10.5 g per earring"
+                        specRow "Dimensions" "≈ 5.5 cm length"
+                    ]
+                ]
+            ]
+
+            div [
+                className "mx-4 p-4 rounded-lg flex flex-col gap-4"
+                style [
+                    style.backgroundColor Colour.background
+                ]
+
+                children [
+                    p [
+                        match product.Price with
+                        | USD usd -> sprintf "$%.2f" usd
+                        | CAD cad -> sprintf "$%.2f" cad
+                        | RMB rmb -> sprintf "¥%.0f" rmb
+                        |> text
+
+                        className "font-bold"
                     ]
 
                     ul [
-                        li [
-                            match product.Plating with
-                            | Gold14k -> "Gold-plated sterling silver"
-                            | WhiteGold14k -> "White gold-plated sterling silver"
-                            |> sprintf "Material: %s"
-                            |> text
+                        className "text-sm list-disc ml-4"
+                        children [
+                            li "90-day free returns, 180-day free exchanges"
+                            li "Instant return label provided"
+                            li "100% money back guarantee"
                         ]
-                        li [
-                            sprintf "Weight: %.1f g per pair" ((float product.Mass) * 1.0<mg> / 1000.0<mg / g>) |> text
-                        ]
-                        li [ text "Dimensions: ?" ]
                     ]
 
-                    Button [ text "Button"; className "lg:w-2/3" ]
-                    Button [ text "Button"; className "lg:w-2/3" ]
-
                     Button [
+                        className "rounded-full w-full"
                         text "Buy Now"
-                        className "lg:w-2/3"
-                        onClick (fun _ ->
-                            promise {
-                                let! stripe = stripePromise
-
-                                let! result =
-                                    stripe.redirectToCheckout (
-                                        U2.Case2 {
-                                            lineItems = [|
-                                                { price = "price_1QTGtE091MsxMkVkDRCwGunf"; quantity = 1 }
-                                            |]
-                                            mode = "payment"
-                                            successUrl = "https://example.com/success"
-                                            cancelUrl = "https://example.com/cancel"
-                                            clientReferenceId = None
-                                            customerEmail = None
-                                            billingAddressCollection = None
-                                            shippingAddressCollection = None
-                                            locale = None
-                                            submitType = Some "pay"
-                                        }
-                                    )
-
-                                ignore result
-                            }
-                            |> ignore)
+                        style [ style.backgroundColor Colour.button.background; style.color Colour.button.foreground ]
                     ]
                 ]
             ]

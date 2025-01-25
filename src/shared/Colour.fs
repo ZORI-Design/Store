@@ -19,6 +19,8 @@ let paragraph = primitive.Grey.``500``
 
 let header = primitive.Grey.``600``
 
+let subheader = primitive.Grey.``400``
+
 let icon = primitive.Grey.``600``
 
 let button = {| background = primitive.Grey.``600``; foreground = primitive.Grey.``100`` |}
