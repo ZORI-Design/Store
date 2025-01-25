@@ -1,10 +1,10 @@
-const { nextui } = require("@nextui-org/react");
+const { heroui } = require("@heroui/react");
 
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
         "./src/**/*.{js,ts,jsx,tsx}",
-        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+        "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
         extend: {
@@ -22,7 +22,7 @@ export default {
         }
     },
     darkMode: "class",
-    plugins: [nextui({
+    plugins: [heroui({
         layout: {
             dividerWeight: "1px", // h-divider the default height applied to the divider component
             disabledOpacity: 0.5, // this value is applied as opacity-[value] when the component is disabled

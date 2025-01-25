@@ -7,7 +7,7 @@ open Store.UI.Footer
 
 open type Feliz.Html
 open type Feliz.prop
-open type NextUI
+open type HeroUI
 
 [<ReactComponent>]
 let Policy () =

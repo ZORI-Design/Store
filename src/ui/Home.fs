@@ -6,7 +6,7 @@ open Feliz.Router
 
 open type Feliz.Html
 open type Feliz.prop
-open type NextUI
+open type HeroUI
 
 [<ReactComponent>]
 let Home () =

@@ -55,7 +55,7 @@ let Root () =
             |> Promise.start)
     )
 
-    NextUI.NextUIProvider {|
+    HeroUI.HeroUIProvider {|
         navigate = Router.navigatePath
         children =
             [

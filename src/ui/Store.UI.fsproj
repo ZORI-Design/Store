@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Api.fs" />
-    <Compile Include="NextUI.fs" />
+    <Compile Include="HeroUI.fs" />
     <Compile Include="Icon.fs" />
     <Compile Include="Navbar.fs" />
     <Compile Include="Footer.fs" />

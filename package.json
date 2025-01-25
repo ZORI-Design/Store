@@ -36,7 +36,7 @@
     "vite": "^5.3.5"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.4.6",
+    "@heroui/react": "^2.6.14",
     "@stripe/react-stripe-js": "^3.0.0",
     "@stripe/stripe-js": "^5.2.0",
     "framer-motion": "^11.3.29",

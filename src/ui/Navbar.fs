@@ -2,7 +2,7 @@
 
 open Feliz
 open Feliz.Router
-open type Store.UI.NextUI
+open type Store.UI.HeroUI
 open Store.Shared
 open type Feliz.Html
 open Fable.Core.JsInterop

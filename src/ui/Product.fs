@@ -7,7 +7,7 @@ open Store.Shared
 
 open type Feliz.Html
 open type Feliz.prop
-open type NextUI
+open type HeroUI
 open Fable.Core
 
 [<Measure>]
@@ -128,7 +128,7 @@ let Product (product: Product) (country: Market) =
                         | RMB rmb -> sprintf "¥%.0f" rmb
                         |> text
 
-                        className "font-bold"
+                        className "font-bold line-through"
                     ]
 
                     ul [
