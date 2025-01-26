@@ -24,3 +24,8 @@ let subheader = primitive.Grey.``400``
 let icon = primitive.Grey.``600``
 
 let button = {| background = primitive.Grey.``600``; foreground = primitive.Grey.``100`` |}
+
+let indicator = {|
+    active = primitive.Grey.``600``
+    inactive = primitive.Grey.``300``
+|}

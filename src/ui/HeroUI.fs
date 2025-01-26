@@ -75,3 +75,6 @@ type HeroUI =
 
     static member inline Divider(xs: IReactProperty list) : ReactElement =
         Interop.reactApi.createElement (import "Divider" "@heroui/react", createObj !!xs)
+
+    static member inline Chip(xs: IReactProperty list) : ReactElement =
+        Interop.reactApi.createElement (import "Chip" "@heroui/react", createObj !!xs)

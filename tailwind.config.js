@@ -11,6 +11,10 @@ export default {
             aspectRatio: {
                 '1/1': '1 / 1',
                 '4/5': '4 / 5'
+            },
+            fontFamily: {
+                'figtree': ['figtree'],
+                'the-seasons': ['the-seasons']
             }
         },
         screens: {
@@ -38,6 +42,16 @@ export default {
                 medium: "1.5rem", // text-medium
                 large: "1.75rem", // text-large
             },
+        },
+        themes: {
+            light: {
+                colors: {
+                    primary: {
+                        foreground: "#FFFFFF",
+                        DEFAULT: "#212121",
+                    }
+                }
+            }
         }
     })],
 }
